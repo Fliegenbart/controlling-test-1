@@ -1,0 +1,23 @@
+[project]
+name = "variance-copilot"
+version = "0.1.0"
+description = "Local variance analysis tool with AI commentary"
+requires-python = ">=3.9"
+dependencies = [
+    "streamlit>=1.30",
+    "pandas>=2.0",
+    "requests>=2.31",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.1",
+]
+
+[tool.setuptools.packages.find]
+include = ["variance_copilot*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

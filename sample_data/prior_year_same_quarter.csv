@@ -1,0 +1,6 @@
+posting_date,amount,account,account_name,cost_center,vendor,text
+2024-01-15,11500,6000,Personalkosten,CC100,V001,Gehalt Januar
+2024-02-15,11800,6000,Personalkosten,CC100,V001,Gehalt Februar
+2024-03-15,11600,6000,Personalkosten,CC100,V001,Gehalt Maerz
+2024-01-20,6500,6200,IT-Kosten,CC200,V020,Server Wartung
+2024-03-10,4800,6300,Materialkosten,CC100,V030,Rohstoffe
