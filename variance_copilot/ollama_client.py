@@ -114,7 +114,11 @@ def ollama_generate(
 def extract_json(text: str) -> Optional[Dict[str, Any]]:
     """Extract JSON from LLM response.
 
-    Handles markdown code blocks and embedded JSON.
+    Robust extraction that handles:
+    - Markdown code blocks (```json ... ```)
+    - JSON embedded in text ("bla bla {...} bla")
+    - Multiple JSON objects (returns first valid one)
+    - Nested braces
 
     Args:
         text: Raw response text
@@ -122,7 +126,10 @@ def extract_json(text: str) -> Optional[Dict[str, Any]]:
     Returns:
         Parsed dict or None
     """
-    # Try markdown code block first
+    if not text or not text.strip():
+        return None
+
+    # Strategy 1: Try markdown code block first
     code_block = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
     if code_block:
         try:
@@ -130,7 +137,53 @@ def extract_json(text: str) -> Optional[Dict[str, Any]]:
         except json.JSONDecodeError:
             pass
 
-    # Try to find any JSON object
+    # Strategy 2: Try direct parse (if response is pure JSON)
+    stripped = text.strip()
+    if stripped.startswith("{"):
+        try:
+            return json.loads(stripped)
+        except json.JSONDecodeError:
+            pass
+
+    # Strategy 3: Find JSON object with brace matching
+    # This handles nested braces correctly
+    start_idx = text.find("{")
+    if start_idx != -1:
+        depth = 0
+        end_idx = start_idx
+        in_string = False
+        escape_next = False
+
+        for i, char in enumerate(text[start_idx:], start_idx):
+            if escape_next:
+                escape_next = False
+                continue
+
+            if char == "\\":
+                escape_next = True
+                continue
+
+            if char == '"' and not escape_next:
+                in_string = not in_string
+                continue
+
+            if not in_string:
+                if char == "{":
+                    depth += 1
+                elif char == "}":
+                    depth -= 1
+                    if depth == 0:
+                        end_idx = i + 1
+                        break
+
+        if depth == 0 and end_idx > start_idx:
+            json_str = text[start_idx:end_idx]
+            try:
+                return json.loads(json_str)
+            except json.JSONDecodeError:
+                pass
+
+    # Strategy 4: Fallback regex (less precise but catches edge cases)
     brace_match = re.search(r"\{[\s\S]*\}", text)
     if brace_match:
         try:
@@ -139,3 +192,21 @@ def extract_json(text: str) -> Optional[Dict[str, Any]]:
             pass
 
     return None
+
+
+def validate_comment_json(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Validate and normalize comment JSON structure.
+
+    Args:
+        data: Parsed JSON dict
+
+    Returns:
+        Normalized dict with all expected fields
+    """
+    return {
+        "headline": data.get("headline", "Keine Überschrift"),
+        "summary": data.get("summary", []),
+        "drivers": data.get("drivers", []),
+        "evidence": data.get("evidence", []),
+        "questions": data.get("questions", []),
+    }

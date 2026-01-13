@@ -27,7 +27,7 @@ from variance_copilot.ollama_client import (
     list_models,
     ollama_generate,
 )
-from variance_copilot.prompts import SYSTEM_PROMPT, format_context
+from variance_copilot.prompts import get_system_prompt, format_context
 
 # --- Page Config ---
 st.set_page_config(
@@ -194,15 +194,55 @@ if "selected_account" not in st.session_state:
     st.session_state.selected_account = None
 if "comment_result" not in st.session_state:
     st.session_state.comment_result = None
+if "demo_loaded" not in st.session_state:
+    st.session_state.demo_loaded = False
+
+# --- Sample Data Path ---
+SAMPLE_DIR = Path(__file__).parent / "sample_data"
+SAMPLE_PRIOR = SAMPLE_DIR / "buchungen_Q2_2024_fiktiv.csv"
+SAMPLE_CURR = SAMPLE_DIR / "buchungen_Q2_2025_fiktiv.csv"
 
 # --- Sidebar ---
 with st.sidebar:
+    st.markdown("### Demo Data")
+    if SAMPLE_PRIOR.exists() and SAMPLE_CURR.exists():
+        if st.button("Load Sample Data", type="primary", use_container_width=True):
+            # Load sample CSVs
+            raw_prior = load_csv(SAMPLE_PRIOR)
+            raw_curr = load_csv(SAMPLE_CURR)
+
+            # Default mapping for sample data
+            mapping = ColumnMapping(
+                posting_date="posting_date",
+                amount="amount",
+                account="account",
+                account_name="account_name",
+                cost_center="cost_center",
+                vendor="vendor",
+                text="text",
+            )
+
+            st.session_state.prior_df = normalize(raw_prior, mapping, SignMode.AS_IS)
+            st.session_state.curr_df = normalize(raw_curr, mapping, SignMode.AS_IS)
+            st.session_state.variance_df = variance_by_account(
+                st.session_state.prior_df, st.session_state.curr_df
+            )
+            st.session_state.demo_loaded = True
+            st.rerun()
+
+        st.caption("Q2 2024 vs Q2 2025 (synthetic)")
+    else:
+        st.warning("Sample data not found")
+        st.caption("Run: python scripts/generate_sample_data.py")
+
+    st.markdown("---")
     st.markdown("### Settings")
 
     st.markdown("##### Materiality")
-    min_abs_delta = st.number_input("Min. Absolute Delta", 0, 1000000, 5000, 1000)
+    min_abs_delta = st.number_input("Min. Absolute Delta", 0, 1000000, 10000, 1000)
     min_pct_delta = st.number_input("Min. % Delta", 0, 100, 10, 5) / 100
-    min_base = st.number_input("Min. Base Value", 0, 1000000, 10000, 1000)
+    min_base = st.number_input("Min. Base Value", 0, 1000000, 5000, 1000)
+    min_share_total = st.number_input("Min. Share of Total (%)", 0, 100, 3, 1) / 100
 
     st.markdown("##### Amount Sign")
     sign_mode = st.selectbox(
@@ -223,6 +263,15 @@ with st.sidebar:
     ollama_url = st.text_input("Base URL", ollama_config["base_url"])
     ollama_model = st.text_input("Model", ollama_config["model"])
 
+    st.markdown("##### Prompt Mode")
+    prompt_mode = st.selectbox(
+        "Mode",
+        ["strict", "normal"],
+        index=0,
+        format_func=lambda x: "Strict (Evidenz-Labels)" if x == "strict" else "Normal",
+        help="Strict: Evidenz-Labels Pflicht, nur JSON. Normal: Flexibler."
+    )
+
     if is_available(ollama_url):
         st.success("Connected", icon="✅")
     else:
@@ -237,17 +286,29 @@ st.markdown("---")
 # --- Upload Section ---
 st.markdown("### Import Data")
 
-col1, col2 = st.columns(2, gap="large")
+# Show demo data indicator
+if st.session_state.demo_loaded and st.session_state.variance_df is not None:
+    st.success(f"Demo Data geladen: Prior {len(st.session_state.prior_df):,} Zeilen · Current {len(st.session_state.curr_df):,} Zeilen")
+    st.caption("Sample Data: Q2 2024 vs Q2 2025 (synthetisch)")
+    if st.button("Reset", help="Daten zurücksetzen für neuen Upload"):
+        st.session_state.prior_df = None
+        st.session_state.curr_df = None
+        st.session_state.variance_df = None
+        st.session_state.demo_loaded = False
+        st.session_state.comment_result = None
+        st.rerun()
+else:
+    col1, col2 = st.columns(2, gap="large")
 
-with col1:
-    st.markdown("**Prior Year (Same Quarter)**")
-    prior_file = st.file_uploader("Upload CSV", type=["csv"], key="prior", label_visibility="collapsed")
+    with col1:
+        st.markdown("**Prior Year (Same Quarter)**")
+        prior_file = st.file_uploader("Upload CSV", type=["csv"], key="prior", label_visibility="collapsed")
 
-with col2:
-    st.markdown("**Current Quarter**")
-    curr_file = st.file_uploader("Upload CSV", type=["csv"], key="curr", label_visibility="collapsed")
+    with col2:
+        st.markdown("**Current Quarter**")
+        curr_file = st.file_uploader("Upload CSV", type=["csv"], key="curr", label_visibility="collapsed")
 
-if prior_file and curr_file:
+if not st.session_state.demo_loaded and 'prior_file' in dir() and prior_file and curr_file:
     raw_prior = load_csv(BytesIO(prior_file.read()))
     raw_curr = load_csv(BytesIO(curr_file.read()))
 
@@ -315,6 +376,7 @@ if st.session_state.variance_df is not None:
         min_abs_delta=min_abs_delta if min_abs_delta > 0 else None,
         min_pct_delta=min_pct_delta if min_pct_delta > 0 else None,
         min_base=min_base if min_base > 0 else None,
+        min_share_total=min_share_total if min_share_total > 0 else None,
     )
 
     st.caption(f"Showing {len(filtered)} of {len(st.session_state.variance_df)} accounts after materiality filter")
@@ -324,10 +386,21 @@ if st.session_state.variance_df is not None:
     display["current"] = display["current"].apply(lambda x: f"{x:,.0f}")
     display["delta"] = display["delta"].apply(lambda x: f"{x:+,.0f}")
     display["delta_pct"] = display["delta_pct"].apply(lambda x: f"{x:+.1%}" if pd.notna(x) else "—")
+    display["abs_delta"] = display["abs_delta"].apply(lambda x: f"{x:,.0f}")
+    display["share_of_total_abs_delta"] = display["share_of_total_abs_delta"].apply(lambda x: f"{x:.1%}")
 
     st.dataframe(
-        display[["account", "account_name", "prior", "current", "delta", "delta_pct"]].rename(
-            columns={"account": "Account", "account_name": "Name", "prior": "Prior", "current": "Current", "delta": "Δ", "delta_pct": "Δ%"}
+        display[["account", "account_name", "prior", "current", "delta", "delta_pct", "abs_delta", "share_of_total_abs_delta"]].rename(
+            columns={
+                "account": "Account",
+                "account_name": "Name",
+                "prior": "Prior",
+                "current": "Current",
+                "delta": "Δ",
+                "delta_pct": "Δ%",
+                "abs_delta": "|Δ|",
+                "share_of_total_abs_delta": "Share"
+            }
         ),
         use_container_width=True,
         hide_index=True,
@@ -418,6 +491,11 @@ if st.session_state.variance_df is not None:
                     drivers_list = drivers.to_dict("records") if not drivers.empty else []
                     samples_list = samples.to_dict("records") if not samples.empty else []
 
+                    # Get additional metrics from variance_df
+                    var_row = st.session_state.variance_df[st.session_state.variance_df["account"] == selected].iloc[0]
+                    abs_delta_val = var_row.get("abs_delta")
+                    share_total_val = var_row.get("share_of_total_abs_delta")
+
                     prompt = format_context(
                         account=selected,
                         account_name=acc_row["account_name"] or "",
@@ -428,18 +506,22 @@ if st.session_state.variance_df is not None:
                         drivers=drivers_list,
                         samples=samples_list,
                         keywords=kw if kw else [],
+                        abs_delta=abs_delta_val,
+                        share_of_total=share_total_val,
                     )
 
                     try:
+                        system_prompt = get_system_prompt(prompt_mode)
                         response = ollama_generate(
                             user_prompt=prompt,
-                            system_prompt=SYSTEM_PROMPT,
+                            system_prompt=system_prompt,
                             base_url=ollama_url,
                             model=ollama_model,
                         )
                         st.session_state.comment_result = {
                             "raw": response,
                             "parsed": extract_json(response),
+                            "prompt_mode": prompt_mode,
                         }
                     except (ConnectionError, RuntimeError) as e:
                         st.error(str(e))
@@ -491,9 +573,10 @@ if st.session_state.variance_df is not None:
                 with st.expander("View JSON"):
                     st.json(data)
             else:
-                st.warning("Could not parse JSON response")
-                with st.expander("Raw Response"):
-                    st.code(result["raw"])
+                st.warning("⚠️ JSON-Parsing fehlgeschlagen. Das Modell hat kein gültiges JSON geliefert.")
+                st.caption("Tipp: Versuche den 'Strict' Prompt-Modus oder ein anderes Modell.")
+                with st.expander("Rohtext-Antwort anzeigen", expanded=True):
+                    st.code(result["raw"], language=None)
 
 # --- Footer ---
 st.markdown("---")

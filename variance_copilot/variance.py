@@ -2,20 +2,38 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Optional
 
 import pandas as pd
 
 
+# Default materiality thresholds
+DEFAULT_MIN_ABS_DELTA = 10000
+DEFAULT_MIN_PCT_DELTA = 0.10
+DEFAULT_MIN_BASE = 5000
+DEFAULT_MIN_SHARE_TOTAL = 0.03
+
+
+@dataclass
+class MaterialityConfig:
+    """Configuration for materiality filtering."""
+    min_abs_delta: float = DEFAULT_MIN_ABS_DELTA
+    min_pct_delta: float = DEFAULT_MIN_PCT_DELTA
+    min_base: float = DEFAULT_MIN_BASE
+    min_share_total: float = DEFAULT_MIN_SHARE_TOTAL
+
+
 def variance_by_account(prior_df: pd.DataFrame, curr_df: pd.DataFrame) -> pd.DataFrame:
-    """Calculate variance by account.
+    """Calculate variance by account with materiality metrics.
 
     Args:
         prior_df: Prior period (normalized)
         curr_df: Current period (normalized)
 
     Returns:
-        DataFrame with account, account_name, prior, current, delta, delta_pct
+        DataFrame with: account, account_name, prior, current, delta, delta_pct,
+                       abs_delta, share_of_total_abs_delta
     """
     prior_agg = (
         prior_df.groupby("account")
@@ -36,57 +54,90 @@ def variance_by_account(prior_df: pd.DataFrame, curr_df: pd.DataFrame) -> pd.Dat
         merged["account_name"] = merged["account_name"].combine_first(merged["account_name_curr"])
         merged = merged.drop(columns=["account_name_curr"])
 
+    # Calculate delta and delta_pct
     merged["delta"] = merged["current"] - merged["prior"]
     merged["delta_pct"] = merged.apply(
         lambda r: (r["delta"] / abs(r["prior"])) if r["prior"] != 0 else None,
         axis=1,
     )
 
-    return merged.sort_values("delta", key=abs, ascending=False).reset_index(drop=True)
+    # Calculate abs_delta
+    merged["abs_delta"] = merged["delta"].abs()
+
+    # Calculate share_of_total_abs_delta
+    total_abs_delta = merged["abs_delta"].sum()
+    if total_abs_delta > 0:
+        merged["share_of_total_abs_delta"] = merged["abs_delta"] / total_abs_delta
+    else:
+        merged["share_of_total_abs_delta"] = 0.0
+
+    # Sort by abs_delta descending
+    return merged.sort_values("abs_delta", ascending=False).reset_index(drop=True)
 
 
 def materiality_filter(
     df: pd.DataFrame,
+    config: Optional[MaterialityConfig] = None,
     min_abs_delta: Optional[float] = None,
     min_pct_delta: Optional[float] = None,
     min_base: Optional[float] = None,
+    min_share_total: Optional[float] = None,
 ) -> pd.DataFrame:
     """Filter variances by materiality.
 
-    Logic: min_abs_delta OR (min_pct_delta AND min_base)
+    Logic: material = (abs_delta >= MIN_ABS_DELTA)
+                   OR (abs(prior) >= MIN_BASE AND abs(delta_pct) >= MIN_PCT_DELTA)
+                   OR (share_of_total_abs_delta >= MIN_SHARE_TOTAL)
 
     Args:
         df: Variance DataFrame from variance_by_account
+        config: MaterialityConfig object (alternative to individual params)
         min_abs_delta: Minimum absolute delta
         min_pct_delta: Minimum percentage delta (0.1 = 10%)
         min_base: Minimum base value for pct filter
+        min_share_total: Minimum share of total abs delta
 
     Returns:
-        Filtered DataFrame
+        Filtered DataFrame sorted by abs_delta descending
     """
-    def passes(row):
-        abs_delta = abs(row["delta"])
-        base = max(abs(row["prior"]), abs(row["current"]))
+    # Use config or individual parameters
+    if config:
+        _min_abs_delta = config.min_abs_delta
+        _min_pct_delta = config.min_pct_delta
+        _min_base = config.min_base
+        _min_share_total = config.min_share_total
+    else:
+        _min_abs_delta = min_abs_delta if min_abs_delta is not None else DEFAULT_MIN_ABS_DELTA
+        _min_pct_delta = min_pct_delta if min_pct_delta is not None else DEFAULT_MIN_PCT_DELTA
+        _min_base = min_base if min_base is not None else DEFAULT_MIN_BASE
+        _min_share_total = min_share_total if min_share_total is not None else DEFAULT_MIN_SHARE_TOTAL
 
-        # No filter = pass all
-        if min_abs_delta is None and min_pct_delta is None:
+    def is_material(row) -> bool:
+        abs_delta = row["abs_delta"]
+        abs_prior = abs(row["prior"])
+        delta_pct = row["delta_pct"]
+        share = row["share_of_total_abs_delta"]
+
+        # Rule 1: abs_delta >= MIN_ABS_DELTA
+        if abs_delta >= _min_abs_delta:
             return True
 
-        # Check abs threshold
-        if min_abs_delta is not None and abs_delta >= min_abs_delta:
-            return True
+        # Rule 2: abs(prior) >= MIN_BASE AND abs(delta_pct) >= MIN_PCT_DELTA
+        if abs_prior >= _min_base and delta_pct is not None:
+            if abs(delta_pct) >= _min_pct_delta:
+                return True
 
-        # Check pct threshold (needs base)
-        if min_pct_delta is not None and min_base is not None:
-            if base >= min_base:
-                pct = abs_delta / base if base > 0 else 0
-                if pct >= min_pct_delta:
-                    return True
+        # Rule 3: share_of_total_abs_delta >= MIN_SHARE_TOTAL
+        if share >= _min_share_total:
+            return True
 
         return False
 
-    mask = df.apply(passes, axis=1)
-    return df[mask].reset_index(drop=True)
+    mask = df.apply(is_material, axis=1)
+    result = df[mask].copy()
+
+    # Sort by abs_delta descending
+    return result.sort_values("abs_delta", ascending=False).reset_index(drop=True)
 
 
 def drivers_for_account(

@@ -27,6 +27,18 @@ streamlit run streamlit_app.py
 
 Öffnet http://localhost:8501.
 
+## Demo-Modus
+
+Die App enthält einen Demo-Loader für schnelles Testen:
+
+1. **Sidebar öffnen** (Pfeil oben links)
+2. **"Load Sample Data"** Button klicken
+3. Die synthetischen Daten (Q2 2024 vs Q2 2025) werden automatisch geladen
+
+Alternativ: Eigene CSVs über den normalen Upload-Flow hochladen.
+
+**Reset:** Über den "Reset" Button können die Demo-Daten zurückgesetzt werden.
+
 ## Sample-Daten
 
 Im Ordner `sample_data/` liegen synthetische Testdaten:
@@ -69,21 +81,25 @@ OLLAMA_TIMEOUT=120
 
 ```
 variance_copilot/
-├── streamlit_app.py         # Streamlit UI
+├── streamlit_app.py           # Streamlit UI (Entry Point)
 ├── variance_copilot/
-│   ├── io.py                # CSV Reader
-│   ├── normalize.py         # Spalten-Mapping
-│   ├── variance.py          # Variance Engine
-│   ├── keywords.py          # Text-Analyse
-│   ├── ollama_client.py     # Ollama API
-│   └── prompts.py           # LLM Prompts
+│   ├── io.py                  # CSV Reader
+│   ├── normalize.py           # Spalten-Mapping
+│   ├── variance.py            # Variance Engine + Materiality
+│   ├── keywords.py            # Text-Analyse
+│   ├── ollama_client.py       # Ollama API + JSON Extraction
+│   └── prompts.py             # LLM Prompts (strict/normal)
 ├── scripts/
-│   └── generate_sample_data.py
+│   └── generate_sample_data.py  # Sample-Daten Generator
 ├── sample_data/
 │   ├── buchungen_Q2_2024_fiktiv.csv
 │   └── buchungen_Q2_2025_fiktiv.csv
 ├── tests/
-└── pyproject.toml
+│   ├── test_variance.py       # Materiality Tests
+│   ├── test_ollama_client.py  # JSON Extraction Tests
+│   └── ...
+├── pyproject.toml
+└── README.md
 ```
 
 ## Hard Constraints
