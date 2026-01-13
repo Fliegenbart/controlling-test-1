@@ -9,7 +9,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent))
 
 from variance_copilot.io import load_csv
 from variance_copilot.normalize import ColumnMapping, SignMode, normalize
