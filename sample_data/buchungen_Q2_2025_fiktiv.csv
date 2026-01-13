@@ -1,0 +1,401 @@
+posting_date,amount,account,account_name,cost_center,profit_center,vendor,customer,document_no,text
+2025-04-01,69018.58,4000,Umsatzerlöse Labordiagnostik,CC200,PC-CONSULT,,Städtisches Klinikum Stuttgart,RE100093,Diagnostik Auftrag 100093
+2025-04-01,14009.14,4020,Umsatzerlöse Schulungen,CC100,PC-DIAG,,Labor Gemeinschaft Bayern,RE100096,Laboranalysen April
+2025-04-01,7660.58,4020,Umsatzerlöse Schulungen,CC200,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100103,Diagnostik Auftrag 100103
+2025-04-01,16462.18,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Städtisches Klinikum Stuttgart,RE100169,Laboranalysen April
+2025-04-01,-7886.85,5000,Material Reagenzien,CC200,PC-DIAG,Roche Diagnostics,,BK100184,Chemikalien Q2
+2025-04-02,6109.71,4100,Sonstige Erlöse,CC100,PC-DIAG,,Krankenhaus Nordwest,RE100070,Diagnostik Auftrag 100070
+2025-04-02,21089.67,4000,Umsatzerlöse Labordiagnostik,CC200,PC-CONSULT,,Krankenhaus Nordwest,RE100077,Laboranalysen April
+2025-04-02,6568.81,4020,Umsatzerlöse Schulungen,CC200,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100127,Laboranalysen April
+2025-04-02,-1095.57,5010,Material Verbrauchsmittel,CC500,PC-DIAG,Merck,,BK100243,Handschuhe Nachbestellung
+2025-04-02,-12407.51,6200,Wartung Geräte,CC500,PC-CONSULT,Siemens Healthineers,,BK100297,Service Zentrifuge
+2025-04-02,-13607.43,6500,Beratungskosten,CC400,PC-TRAIN,Deloitte,,BK100341,Prozessoptimierung
+2025-04-02,-11849.23,6700,Marketing,CC400,PC-TRAIN,Google Ads,,BK100377,Broschüren
+2025-04-03,3216.75,4100,Sonstige Erlöse,CC100,PC-CONSULT,,Labor Gemeinschaft Bayern,RE100001,Beratungsleistung
+2025-04-03,8560.16,4020,Umsatzerlöse Schulungen,CC100,PC-TRAIN,,MVZ Labor Bremen,RE100091,Rahmenvertrag Abrechnung
+2025-04-03,35029.7,4000,Umsatzerlöse Labordiagnostik,CC300,PC-DIAG,,Praxis Dr. Weber,RE100092,Schulung Laborpersonal
+2025-04-03,-6022.79,5020,Fremdleistungen Labor,CC200,PC-TRAIN,Synlab,,BK100262,Fremdanalyse Spezialtest
+2025-04-03,-6157.1,6200,Wartung Geräte,CC500,PC-DIAG,Roche Diagnostics,,BK100294,Wartung Analysegerät
+2025-04-03,-13840.43,6300,IT-Kosten,CC500,PC-DIAG,IT-Service Partner,,BK100312,Microsoft 365
+2025-04-03,-18799.08,6500,Beratungskosten,CC100,PC-DIAG,Deloitte,,BK100337,Gutachten
+2025-04-04,54139.03,4000,Umsatzerlöse Labordiagnostik,CC300,PC-DIAG,,Praxis Dr. Weber,RE100021,Beratungsleistung
+2025-04-04,68461.71,4000,Umsatzerlöse Labordiagnostik,CC100,PC-CONSULT,,Labor Gemeinschaft Bayern,RE100051,Diagnostik Auftrag 100051
+2025-04-04,1625.32,4100,Sonstige Erlöse,CC200,PC-CONSULT,,MVZ Labor Bremen,RE100057,Laboranalysen April
+2025-04-04,7019.74,4100,Sonstige Erlöse,CC100,PC-DIAG,,Krankenhaus Nordwest,RE100060,Beratungsleistung
+2025-04-04,1713.35,4100,Sonstige Erlöse,CC100,PC-DIAG,,Städtisches Klinikum Stuttgart,RE100094,Laboranalysen April
+2025-04-04,-21031.1,5000,Material Reagenzien,CC400,PC-ADMIN,Beckman Coulter,,BK100189,Nachbestellung Assays
+2025-04-04,-4445.8,5010,Material Verbrauchsmittel,CC500,PC-ADMIN,Merck,,BK100246,Pipettenspitzen
+2025-04-05,1787.63,4100,Sonstige Erlöse,CC300,PC-TRAIN,,Charité Berlin,RE100139,Diagnostik Auftrag 100139
+2025-04-05,21218.58,4010,Umsatzerlöse Beratung,CC300,PC-CONSULT,,Krankenhaus Nordwest,RE100170,Schulung Laborpersonal
+2025-04-05,-21509.82,5000,Material Reagenzien,CC500,PC-CONSULT,Abbott,,BK100211,Nachbestellung Assays
+2025-04-05,-202939.46,6000,Personalkosten Gehälter,CC200,PC-DIAG,Lohnbüro Müller,,BK100272,Gehälter April 2025
+2025-04-05,-8112.86,6200,Wartung Geräte,CC300,PC-ADMIN,Siemens Healthineers,,BK100287,Inspektion Automat
+2025-04-05,-16200.71,6400,Reisekosten,CC400,PC-DIAG,Booking.com,,BK100323,Dienstreise April
+2025-04-05,-1943.01,6600,Versicherungen,CC100,PC-TRAIN,Allianz,,BK100353,Betriebshaftpflicht Q2
+2025-04-06,4226.78,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Krankenhaus Nordwest,RE100002,Diagnostik Auftrag 100002
+2025-04-06,3483.63,4100,Sonstige Erlöse,CC100,PC-TRAIN,,Praxis Dr. Weber,RE100106,Rahmenvertrag Abrechnung
+2025-04-06,-19460.95,5010,Material Verbrauchsmittel,CC100,PC-DIAG,Merck,,BK100231,Verbrauchsmaterial April
+2025-04-06,-17596.36,6700,Marketing,CC400,PC-CONSULT,Agentur Kreativ,,BK100376,Online Kampagne April
+2025-04-06,-16056.77,6800,Fortbildung,CC300,PC-CONSULT,Springer Verlag,,BK100384,Zertifizierung
+2025-04-07,2903.69,4100,Sonstige Erlöse,CC100,PC-TRAIN,,Charité Berlin,RE100089,Laboranalysen April
+2025-04-07,2210.15,4100,Sonstige Erlöse,CC100,PC-DIAG,,Universitätsklinikum München,RE100136,Schulung Laborpersonal
+2025-04-07,-29966.7,5000,Material Reagenzien,CC200,PC-CONSULT,Abbott,,BK100212,Nachbestellung Assays
+2025-04-07,-16863.87,6300,IT-Kosten,CC200,PC-DIAG,IT-Service Partner,,BK100311,Microsoft 365
+2025-04-07,-9755.86,6700,Marketing,CC200,PC-ADMIN,Agentur Kreativ,,BK100359,Broschüren
+2025-04-07,-10997.65,6800,Fortbildung,CC200,PC-ADMIN,Akademie Medizin,,BK100382,Zertifizierung
+2025-04-08,3201.53,4100,Sonstige Erlöse,CC200,PC-TRAIN,,Charité Berlin,RE100061,Laboranalysen April
+2025-04-08,16941.55,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Uniklinik Köln,RE100118,Rahmenvertrag Abrechnung
+2025-04-08,-13025.27,6700,Marketing,CC200,PC-TRAIN,Google Ads,,BK100362,Online Kampagne April
+2025-04-09,27253.93,4010,Umsatzerlöse Beratung,CC100,PC-CONSULT,,Uniklinik Köln,RE100000,Rahmenvertrag Abrechnung
+2025-04-09,5576.59,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Uniklinik Köln,RE100099,Diagnostik Auftrag 100099
+2025-04-10,68954.77,4000,Umsatzerlöse Labordiagnostik,CC100,PC-DIAG,,Praxis Dr. Weber,RE100031,Rahmenvertrag Abrechnung
+2025-04-10,5286.08,4100,Sonstige Erlöse,CC300,PC-TRAIN,,Uniklinik Köln,RE100071,Diagnostik Auftrag 100071
+2025-04-10,1515.97,4100,Sonstige Erlöse,CC100,PC-CONSULT,,MVZ Labor Bremen,RE100123,Diagnostik Auftrag 100123
+2025-04-10,-45847.9,5000,Material Reagenzien,CC200,PC-DIAG,Siemens Healthineers,,BK100216,Nachbestellung Assays
+2025-04-10,-12770.8,5010,Material Verbrauchsmittel,CC400,PC-ADMIN,VWR International,,BK100249,Handschuhe Nachbestellung
+2025-04-11,11708.86,4010,Umsatzerlöse Beratung,CC200,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100167,Laboranalysen April
+2025-04-11,-29755.51,5000,Material Reagenzien,CC500,PC-DIAG,Siemens Healthineers,,BK100223,Nachbestellung Assays
+2025-04-11,-7020.69,6500,Beratungskosten,CC300,PC-ADMIN,Deloitte,,BK100333,Gutachten
+2025-04-13,20933.26,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Labor Gemeinschaft Bayern,RE100010,Projektabrechnung Q2
+2025-04-13,31974.71,4000,Umsatzerlöse Labordiagnostik,CC100,PC-CONSULT,,MVZ Labor Bremen,RE100080,Beratungsleistung
+2025-04-13,-25133.46,5000,Material Reagenzien,CC100,PC-DIAG,Abbott,,BK100173,Lieferung Testkits
+2025-04-13,-30417.27,5000,Material Reagenzien,CC500,PC-CONSULT,Roche Diagnostics,,BK100200,Nachbestellung Assays
+2025-04-13,-28854.62,6100,Miete Laborräume,CC100,PC-CONSULT,Immobilien AG,,BK100278,Miete April 2025
+2025-04-14,76666.45,4000,Umsatzerlöse Labordiagnostik,CC100,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100039,Beratungsleistung
+2025-04-14,11711.86,4020,Umsatzerlöse Schulungen,CC300,PC-DIAG,,Charité Berlin,RE100054,Diagnostik Auftrag 100054
+2025-04-14,22304.99,4010,Umsatzerlöse Beratung,CC200,PC-DIAG,,Uniklinik Köln,RE100085,Rahmenvertrag Abrechnung
+2025-04-14,24309.11,4000,Umsatzerlöse Labordiagnostik,CC300,PC-TRAIN,,MVZ Labor Bremen,RE100126,Rahmenvertrag Abrechnung
+2025-04-14,-10492.36,6400,Reisekosten,CC500,PC-TRAIN,Booking.com,,BK100324,Kundenbesuch
+2025-04-15,7600.82,4100,Sonstige Erlöse,CC200,PC-TRAIN,,Charité Berlin,RE100013,Schulung Laborpersonal
+2025-04-15,6523.54,4100,Sonstige Erlöse,CC300,PC-CONSULT,,Krankenhaus Nordwest,RE100015,Projektabrechnung Q2
+2025-04-15,51819.99,4000,Umsatzerlöse Labordiagnostik,CC100,PC-DIAG,,Städtisches Klinikum Stuttgart,RE100040,Rahmenvertrag Abrechnung
+2025-04-15,11874.91,4020,Umsatzerlöse Schulungen,CC200,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100082,Laboranalysen April
+2025-04-15,-14620.5,5010,Material Verbrauchsmittel,CC100,PC-DIAG,VWR International,,BK100234,Pipettenspitzen
+2025-04-15,-16219.38,6800,Fortbildung,CC500,PC-ADMIN,Akademie Medizin,,BK100379,Fachkongress
+2025-04-16,74245.68,4000,Umsatzerlöse Labordiagnostik,CC200,PC-TRAIN,,MVZ Labor Bremen,RE100072,Laboranalysen April
+2025-04-16,4575.47,4100,Sonstige Erlöse,CC300,PC-DIAG,,Praxis Dr. Weber,RE100075,Laboranalysen April
+2025-04-16,8565.13,4020,Umsatzerlöse Schulungen,CC100,PC-TRAIN,,Charité Berlin,RE100165,Schulung Laborpersonal
+2025-04-16,-9054.91,6400,Reisekosten,CC300,PC-TRAIN,Deutsche Bahn,,BK100320,Kundenbesuch
+2025-04-16,-5126.57,6600,Versicherungen,CC400,PC-TRAIN,AXA,,BK100355,Geräteversicherung
+2025-04-17,8463.99,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Labor Gemeinschaft Bayern,RE100022,Diagnostik Auftrag 100022
+2025-04-17,36459.71,4000,Umsatzerlöse Labordiagnostik,CC100,PC-CONSULT,,Praxis Dr. Weber,RE100064,Laboranalysen April
+2025-04-17,21585.35,4000,Umsatzerlöse Labordiagnostik,CC200,PC-DIAG,,Praxis Dr. Weber,RE100109,Projektabrechnung Q2
+2025-04-17,-13226.06,5020,Fremdleistungen Labor,CC200,PC-CONSULT,Synlab,,BK100268,Fremdanalyse Spezialtest
+2025-04-17,-7598.49,6400,Reisekosten,CC400,PC-DIAG,Booking.com,,BK100316,Dienstreise April
+2025-04-17,-3945.48,6700,Marketing,CC500,PC-TRAIN,Google Ads,,BK100371,Messebeteiligung
+2025-04-17,-13981.26,6700,Marketing,CC300,PC-TRAIN,Agentur Kreativ,,BK100374,Broschüren
+2025-04-18,3392.34,4020,Umsatzerlöse Schulungen,CC200,PC-DIAG,,Labor Gemeinschaft Bayern,RE100037,Projektabrechnung Q2
+2025-04-18,33141.32,4010,Umsatzerlöse Beratung,CC300,PC-TRAIN,,Krankenhaus Nordwest,RE100078,Laboranalysen April
+2025-04-18,-16746.22,5010,Material Verbrauchsmittel,CC100,PC-CONSULT,Merck,,BK100233,Handschuhe Nachbestellung
+2025-04-19,4848.08,4100,Sonstige Erlöse,CC100,PC-CONSULT,,Praxis Dr. Weber,RE100038,Projektabrechnung Q2
+2025-04-19,20873.78,4010,Umsatzerlöse Beratung,CC100,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100055,Diagnostik Auftrag 100055
+2025-04-20,-12989.98,5000,Material Reagenzien,CC300,PC-ADMIN,Abbott,,BK100182,Lieferung Testkits
+2025-04-21,6414.22,4100,Sonstige Erlöse,CC300,PC-DIAG,,Charité Berlin,RE100058,Projektabrechnung Q2
+2025-04-21,-33185.16,5000,Material Reagenzien,CC200,PC-TRAIN,Abbott,,BK100220,Lieferung Testkits
+2025-04-21,-12525.93,5010,Material Verbrauchsmittel,CC500,PC-CONSULT,Fisher Scientific,,BK100254,Pipettenspitzen
+2025-04-21,-8932.42,6200,Wartung Geräte,CC500,PC-TRAIN,TechService GmbH,,BK100296,Service Zentrifuge
+2025-04-21,-18700.2,6500,Beratungskosten,CC200,PC-CONSULT,Deloitte,,BK100339,Prozessoptimierung
+2025-04-22,18476.29,4000,Umsatzerlöse Labordiagnostik,CC100,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100024,Projektabrechnung Q2
+2025-04-22,-6689.92,5000,Material Reagenzien,CC300,PC-CONSULT,Siemens Healthineers,,BK100172,Nachbestellung Assays
+2025-04-22,-12960.78,5010,Material Verbrauchsmittel,CC400,PC-DIAG,VWR International,,BK100232,Verbrauchsmaterial April
+2025-04-22,-12754.25,6700,Marketing,CC300,PC-CONSULT,Agentur Kreativ,,BK100365,Online Kampagne April
+2025-04-22,-14899.99,6900,Sonstige Aufwendungen,CC500,PC-DIAG,Diverse,,BK100398,Kleinmaterial
+2025-04-23,13967.76,4020,Umsatzerlöse Schulungen,CC300,PC-CONSULT,,Uniklinik Köln,RE100107,Projektabrechnung Q2
+2025-04-23,-15005.24,6500,Beratungskosten,CC200,PC-TRAIN,Deloitte,,BK100349,Prozessoptimierung
+2025-04-24,3714.6,4100,Sonstige Erlöse,CC300,PC-DIAG,,Uniklinik Köln,RE100004,Rahmenvertrag Abrechnung
+2025-04-24,4637.42,4020,Umsatzerlöse Schulungen,CC200,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100113,Rahmenvertrag Abrechnung
+2025-04-24,45497.11,4000,Umsatzerlöse Labordiagnostik,CC100,PC-TRAIN,,Charité Berlin,RE100124,Beratungsleistung
+2025-04-24,-62011.87,5000,Material Reagenzien,CC100,PC-TRAIN,Siemens Healthineers,,BK100176,Lieferung Testkits
+2025-04-24,-8428.86,5010,Material Verbrauchsmittel,CC200,PC-TRAIN,Merck,,BK100241,Handschuhe Nachbestellung
+2025-04-24,-12031.32,5010,Material Verbrauchsmittel,CC200,PC-CONSULT,Fisher Scientific,,BK100248,Handschuhe Nachbestellung
+2025-04-24,-31855.91,6100,Miete Laborräume,CC500,PC-DIAG,Immobilien AG,,BK100277,Nebenkosten Q2
+2025-04-24,-14368.82,6300,IT-Kosten,CC300,PC-TRAIN,SAP Deutschland,,BK100300,Serverkosten April
+2025-04-24,-6129.03,6400,Reisekosten,CC400,PC-ADMIN,Lufthansa,,BK100322,Kundenbesuch
+2025-04-25,27207.66,4010,Umsatzerlöse Beratung,CC300,PC-CONSULT,,Labor Gemeinschaft Bayern,RE100045,Laboranalysen April
+2025-04-25,23838.45,4010,Umsatzerlöse Beratung,CC100,PC-TRAIN,,Praxis Dr. Weber,RE100111,Diagnostik Auftrag 100111
+2025-04-25,13348.73,4020,Umsatzerlöse Schulungen,CC100,PC-CONSULT,,Praxis Dr. Weber,RE100168,Rahmenvertrag Abrechnung
+2025-04-25,-41336.26,5000,Material Reagenzien,CC500,PC-TRAIN,Roche Diagnostics,,BK100203,Nachbestellung Assays
+2025-04-25,-11956.64,6300,IT-Kosten,CC400,PC-ADMIN,SAP Deutschland,,BK100315,Serverkosten April
+2025-04-26,-48009.01,5000,Material Reagenzien,CC500,PC-CONSULT,Siemens Healthineers,,BK100225,Reagenzien April
+2025-04-26,-5786.25,5010,Material Verbrauchsmittel,CC200,PC-TRAIN,VWR International,,BK100235,Verbrauchsmaterial April
+2025-04-27,31629.88,4010,Umsatzerlöse Beratung,CC100,PC-DIAG,,Universitätsklinikum München,RE100147,Schulung Laborpersonal
+2025-04-28,4116.32,4020,Umsatzerlöse Schulungen,CC300,PC-CONSULT,,Praxis Dr. Weber,RE100086,Schulung Laborpersonal
+2025-04-28,-24938.25,5000,Material Reagenzien,CC400,PC-DIAG,Abbott,,BK100199,Reagenzien April
+2025-05-01,4036.63,4020,Umsatzerlöse Schulungen,CC200,PC-DIAG,,MVZ Labor Bremen,RE100081,Projektabrechnung Q2
+2025-05-01,12065.29,4010,Umsatzerlöse Beratung,CC100,PC-TRAIN,,Praxis Dr. Weber,RE100083,Rahmenvertrag Abrechnung
+2025-05-01,-8823.46,6400,Reisekosten,CC500,PC-CONSULT,Deutsche Bahn,,BK100328,Kundenbesuch
+2025-05-01,-15551.51,6500,Beratungskosten,CC200,PC-DIAG,Deloitte,,BK100347,Gutachten
+2025-05-01,-15742.44,6700,Marketing,CC200,PC-DIAG,Google Ads,,BK100372,Broschüren
+2025-05-01,-14799.95,6900,Sonstige Aufwendungen,CC100,PC-CONSULT,Diverse,,BK100388,Bürobedarf
+2025-05-01,-6706.35,6900,Sonstige Aufwendungen,CC300,PC-DIAG,Diverse,,BK100389,Sonstiges Mai
+2025-05-02,-7533.44,5000,Material Reagenzien,CC500,PC-CONSULT,Abbott,,BK100193,Reagenzien Mai
+2025-05-02,-22140.31,5000,Material Reagenzien,CC200,PC-TRAIN,Abbott,,BK100222,Lieferung Testkits
+2025-05-02,-6632.25,5010,Material Verbrauchsmittel,CC300,PC-DIAG,Merck,,BK100230,Pipettenspitzen
+2025-05-03,15491.63,4010,Umsatzerlöse Beratung,CC300,PC-DIAG,,Uniklinik Köln,RE100068,Projektabrechnung Q2
+2025-05-03,18432.64,4000,Umsatzerlöse Labordiagnostik,CC200,PC-DIAG,,MVZ Labor Bremen,RE100129,Schulung Laborpersonal
+2025-05-03,-8270.79,6300,IT-Kosten,CC200,PC-TRAIN,SAP Deutschland,,BK100306,Serverkosten Mai
+2025-05-03,-8579.68,6300,IT-Kosten,CC100,PC-CONSULT,IT-Service Partner,,BK100308,Microsoft 365
+2025-05-03,-18947.47,6800,Fortbildung,CC200,PC-ADMIN,Akademie Medizin,,BK100381,Schulung Mitarbeiter
+2025-05-04,29862.09,4000,Umsatzerlöse Labordiagnostik,CC300,PC-CONSULT,,Städtisches Klinikum Stuttgart,RE100090,Schulung Laborpersonal
+2025-05-04,91122.35,4000,Umsatzerlöse Labordiagnostik,CC100,PC-CONSULT,,Universitätsklinikum München,RE100097,Laboranalysen Mai
+2025-05-04,-26891.3,5000,Material Reagenzien,CC200,PC-DIAG,Beckman Coulter,,BK100179,Lieferung Testkits
+2025-05-05,-14588.72,6600,Versicherungen,CC100,PC-CONSULT,Allianz,,BK100354,Betriebshaftpflicht Q2
+2025-05-05,-3629.76,6900,Sonstige Aufwendungen,CC200,PC-CONSULT,Diverse,,BK100391,Bürobedarf
+2025-05-06,25755.24,4010,Umsatzerlöse Beratung,CC300,PC-TRAIN,,Universitätsklinikum München,RE100017,Projektabrechnung Q2
+2025-05-06,4067.54,4100,Sonstige Erlöse,CC200,PC-CONSULT,,Krankenhaus Nordwest,RE100121,Beratungsleistung
+2025-05-06,13625.91,4020,Umsatzerlöse Schulungen,CC200,PC-DIAG,,MVZ Labor Bremen,RE100131,Schulung Laborpersonal
+2025-05-06,-6576.23,5000,Material Reagenzien,CC400,PC-TRAIN,Beckman Coulter,,BK100183,Lieferung Testkits
+2025-05-06,-57080.7,5000,Material Reagenzien,CC500,PC-DIAG,Roche Diagnostics,,BK100221,Lieferung Testkits
+2025-05-06,-4493.84,6500,Beratungskosten,CC200,PC-TRAIN,McKinsey,,BK100335,Strategieberatung
+2025-05-07,17570.91,4000,Umsatzerlöse Labordiagnostik,CC100,PC-DIAG,,Krankenhaus Nordwest,RE100066,Projektabrechnung Q2
+2025-05-07,7596.18,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100101,Rahmenvertrag Abrechnung
+2025-05-07,-15217.64,5010,Material Verbrauchsmittel,CC200,PC-ADMIN,Merck,,BK100244,Handschuhe Nachbestellung
+2025-05-07,-3065.63,6200,Wartung Geräte,CC500,PC-DIAG,Siemens Healthineers,,BK100285,Wartung Analysegerät
+2025-05-07,-17216.16,6600,Versicherungen,CC300,PC-DIAG,Allianz,,BK100351,Betriebshaftpflicht Q2
+2025-05-08,1974.25,4100,Sonstige Erlöse,CC200,PC-TRAIN,,Uniklinik Köln,RE100014,Rahmenvertrag Abrechnung
+2025-05-08,-18235.79,5000,Material Reagenzien,CC500,PC-CONSULT,Abbott,,BK100197,Reagenzien Mai
+2025-05-08,-59372.27,5000,Material Reagenzien,CC400,PC-DIAG,Siemens Healthineers,,BK100228,Nachbestellung Assays
+2025-05-08,-10811.06,5020,Fremdleistungen Labor,CC400,PC-ADMIN,Bioscientia,,BK100266,Externe Laborleistung
+2025-05-08,-12513.12,6800,Fortbildung,CC200,PC-ADMIN,Akademie Medizin,,BK100378,Schulung Mitarbeiter
+2025-05-09,6773.93,4100,Sonstige Erlöse,CC200,PC-CONSULT,,Praxis Dr. Weber,RE100049,Projektabrechnung Q2
+2025-05-09,26715.75,4010,Umsatzerlöse Beratung,CC100,PC-TRAIN,,Universitätsklinikum München,RE100120,Diagnostik Auftrag 100120
+2025-05-09,-9563.85,6400,Reisekosten,CC500,PC-CONSULT,Booking.com,,BK100321,Dienstreise Mai
+2025-05-09,-3958.63,6500,Beratungskosten,CC500,PC-CONSULT,McKinsey,,BK100345,Strategieberatung
+2025-05-10,2186.51,4100,Sonstige Erlöse,CC200,PC-CONSULT,,Uniklinik Köln,RE100005,Diagnostik Auftrag 100005
+2025-05-10,19736.26,4010,Umsatzerlöse Beratung,CC200,PC-DIAG,,Praxis Dr. Weber,RE100006,Beratungsleistung
+2025-05-10,3242.79,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Charité Berlin,RE100143,Laboranalysen Mai
+2025-05-10,2763.99,4100,Sonstige Erlöse,CC300,PC-TRAIN,,Krankenhaus Nordwest,RE100155,Projektabrechnung Q2
+2025-05-10,-23237.05,5000,Material Reagenzien,CC200,PC-TRAIN,Abbott,,BK100174,Chemikalien Q2
+2025-05-10,-13737.81,5000,Material Reagenzien,CC100,PC-TRAIN,Beckman Coulter,,BK100227,Reagenzien Mai
+2025-05-10,-9931.81,6200,Wartung Geräte,CC200,PC-DIAG,Siemens Healthineers,,BK100290,Große Revision Cobas
+2025-05-10,-5768.51,6400,Reisekosten,CC400,PC-DIAG,Booking.com,,BK100325,Dienstreise Mai
+2025-05-10,-9914.76,6500,Beratungskosten,CC400,PC-ADMIN,McKinsey,,BK100346,Gutachten
+2025-05-11,16225.77,4010,Umsatzerlöse Beratung,CC300,PC-CONSULT,,Praxis Dr. Weber,RE100008,Schulung Laborpersonal
+2025-05-11,6053.96,4100,Sonstige Erlöse,CC100,PC-CONSULT,,Universitätsklinikum München,RE100023,Rahmenvertrag Abrechnung
+2025-05-11,80452.42,4000,Umsatzerlöse Labordiagnostik,CC100,PC-CONSULT,,Charité Berlin,RE100028,Beratungsleistung
+2025-05-11,-27406.03,5000,Material Reagenzien,CC400,PC-DIAG,Beckman Coulter,,BK100202,Nachbestellung Assays
+2025-05-11,-7717.22,6300,IT-Kosten,CC200,PC-CONSULT,IT-Service Partner,,BK100309,Microsoft 365
+2025-05-12,91188.23,4000,Umsatzerlöse Labordiagnostik,CC200,PC-TRAIN,,Krankenhaus Nordwest,RE100148,Rahmenvertrag Abrechnung
+2025-05-12,-50393.25,5000,Material Reagenzien,CC100,PC-CONSULT,Siemens Healthineers,,BK100175,Chemikalien Q2
+2025-05-12,-10541.18,5020,Fremdleistungen Labor,CC500,PC-CONSULT,Sonic Healthcare,,BK100259,Fremdanalyse Spezialtest
+2025-05-12,-10068.58,6200,Wartung Geräte,CC400,PC-CONSULT,Siemens Healthineers,,BK100283,Wartung Analysegerät
+2025-05-12,-10813.58,6300,IT-Kosten,CC300,PC-CONSULT,SAP Deutschland,,BK100307,Serverkosten Mai
+2025-05-13,1262.26,4100,Sonstige Erlöse,CC100,PC-TRAIN,,Krankenhaus Nordwest,RE100141,Diagnostik Auftrag 100141
+2025-05-13,-7241.41,5000,Material Reagenzien,CC300,PC-CONSULT,Siemens Healthineers,,BK100171,Reagenzien Mai
+2025-05-13,-9571.39,5010,Material Verbrauchsmittel,CC300,PC-DIAG,Fisher Scientific,,BK100236,Handschuhe Nachbestellung
+2025-05-13,-16620.33,5010,Material Verbrauchsmittel,CC200,PC-CONSULT,VWR International,,BK100240,Handschuhe Nachbestellung
+2025-05-14,25476.52,4010,Umsatzerlöse Beratung,CC300,PC-CONSULT,,Universitätsklinikum München,RE100100,Diagnostik Auftrag 100100
+2025-05-14,81674.89,4000,Umsatzerlöse Labordiagnostik,CC200,PC-CONSULT,,Labor Gemeinschaft Bayern,RE100140,Projektabrechnung Q2
+2025-05-14,33684.81,4000,Umsatzerlöse Labordiagnostik,CC200,PC-CONSULT,,MVZ Labor Bremen,RE100164,Projektabrechnung Q2
+2025-05-14,-31466.58,5000,Material Reagenzien,CC400,PC-DIAG,Abbott,,BK100180,Lieferung Testkits
+2025-05-14,-4204.15,5010,Material Verbrauchsmittel,CC200,PC-ADMIN,Fisher Scientific,,BK100251,Pipettenspitzen
+2025-05-15,10533.75,4020,Umsatzerlöse Schulungen,CC100,PC-TRAIN,,Charité Berlin,RE100046,Schulung Laborpersonal
+2025-05-15,11336.44,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Universitätsklinikum München,RE100047,Rahmenvertrag Abrechnung
+2025-05-15,-9978.37,5000,Material Reagenzien,CC300,PC-TRAIN,Siemens Healthineers,,BK100186,Nachbestellung Assays
+2025-05-15,-43203.57,5000,Material Reagenzien,CC300,PC-TRAIN,Abbott,,BK100188,Reagenzien Mai
+2025-05-15,-45213.94,5000,Material Reagenzien,CC500,PC-DIAG,Siemens Healthineers,,BK100207,Reagenzien Mai
+2025-05-15,-7816.09,5010,Material Verbrauchsmittel,CC500,PC-DIAG,Fisher Scientific,,BK100253,Handschuhe Nachbestellung
+2025-05-15,-15838.51,6500,Beratungskosten,CC500,PC-ADMIN,Deloitte,,BK100334,Gutachten
+2025-05-15,-120000.0,6200,Wartung Geräte,CC100,PC-DIAG,Roche Diagnostics,,BK999999,Große Revision Cobas 8000 - Sonderinspektion
+2025-05-16,3909.41,4100,Sonstige Erlöse,CC100,PC-DIAG,,Universitätsklinikum München,RE100036,Laboranalysen Mai
+2025-05-16,6751.8,4100,Sonstige Erlöse,CC100,PC-CONSULT,,Krankenhaus Nordwest,RE100098,Laboranalysen Mai
+2025-05-16,97587.2,4000,Umsatzerlöse Labordiagnostik,CC300,PC-CONSULT,,Praxis Dr. Weber,RE100102,Projektabrechnung Q2
+2025-05-16,-18440.14,5020,Fremdleistungen Labor,CC300,PC-DIAG,Synlab,,BK100263,Fremdanalyse Spezialtest
+2025-05-16,-12190.31,6200,Wartung Geräte,CC500,PC-ADMIN,TechService GmbH,,BK100284,Inspektion Automat
+2025-05-16,-11253.69,6500,Beratungskosten,CC300,PC-TRAIN,McKinsey,,BK100344,Prozessoptimierung
+2025-05-16,-13131.88,6700,Marketing,CC100,PC-CONSULT,Agentur Kreativ,,BK100361,Messebeteiligung
+2025-05-17,3703.09,4020,Umsatzerlöse Schulungen,CC200,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100104,Laboranalysen Mai
+2025-05-17,15265.26,4010,Umsatzerlöse Beratung,CC100,PC-TRAIN,,Universitätsklinikum München,RE100152,Schulung Laborpersonal
+2025-05-17,-15534.93,6500,Beratungskosten,CC300,PC-CONSULT,McKinsey,,BK100338,Strategieberatung
+2025-05-18,22901.58,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Städtisches Klinikum Stuttgart,RE100025,Schulung Laborpersonal
+2025-05-18,53791.05,4000,Umsatzerlöse Labordiagnostik,CC300,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100035,Schulung Laborpersonal
+2025-05-18,30590.81,4010,Umsatzerlöse Beratung,CC200,PC-DIAG,,Labor Gemeinschaft Bayern,RE100108,Diagnostik Auftrag 100108
+2025-05-18,18306.02,4000,Umsatzerlöse Labordiagnostik,CC300,PC-TRAIN,,MVZ Labor Bremen,RE100156,Beratungsleistung
+2025-05-18,-34952.34,5000,Material Reagenzien,CC300,PC-TRAIN,Roche Diagnostics,,BK100226,Lieferung Testkits
+2025-05-18,-14755.54,5010,Material Verbrauchsmittel,CC300,PC-ADMIN,VWR International,,BK100229,Verbrauchsmaterial Mai
+2025-05-18,-11733.34,6900,Sonstige Aufwendungen,CC200,PC-CONSULT,Diverse,,BK100397,Bürobedarf
+2025-05-19,2843.81,4100,Sonstige Erlöse,CC100,PC-DIAG,,Charité Berlin,RE100132,Diagnostik Auftrag 100132
+2025-05-19,-24306.99,5000,Material Reagenzien,CC500,PC-ADMIN,Beckman Coulter,,BK100191,Lieferung Testkits
+2025-05-19,-2914.21,6400,Reisekosten,CC300,PC-CONSULT,Deutsche Bahn,,BK100318,Kundenbesuch
+2025-05-20,27464.29,4010,Umsatzerlöse Beratung,CC300,PC-DIAG,,Labor Gemeinschaft Bayern,RE100007,Diagnostik Auftrag 100007
+2025-05-20,21792.27,4010,Umsatzerlöse Beratung,CC100,PC-TRAIN,,Krankenhaus Nordwest,RE100032,Schulung Laborpersonal
+2025-05-20,69213.3,4000,Umsatzerlöse Labordiagnostik,CC200,PC-DIAG,,Labor Gemeinschaft Bayern,RE100149,Projektabrechnung Q2
+2025-05-20,-8285.26,5000,Material Reagenzien,CC100,PC-ADMIN,Siemens Healthineers,,BK100192,Chemikalien Q2
+2025-05-20,-54323.82,5000,Material Reagenzien,CC300,PC-ADMIN,Siemens Healthineers,,BK100210,Nachbestellung Assays
+2025-05-20,-13529.02,5010,Material Verbrauchsmittel,CC200,PC-TRAIN,Merck,,BK100250,Verbrauchsmaterial Mai
+2025-05-20,-14628.75,5020,Fremdleistungen Labor,CC200,PC-ADMIN,Synlab,,BK100269,Auftragsanalyse
+2025-05-20,-44927.76,6010,Personalkosten Sozialabgaben,CC200,PC-CONSULT,Lohnbüro Müller,,BK100275,Sozialabgaben Mai 2025
+2025-05-20,-36427.12,6010,Personalkosten Sozialabgaben,CC500,PC-TRAIN,Lohnbüro Müller,,BK100276,Sozialabgaben Mai 2025
+2025-05-20,-10197.77,6200,Wartung Geräte,CC100,PC-ADMIN,Siemens Healthineers,,BK100280,Wartung Analysegerät
+2025-05-21,28191.78,4010,Umsatzerlöse Beratung,CC100,PC-DIAG,,Labor Gemeinschaft Bayern,RE100063,Schulung Laborpersonal
+2025-05-21,5931.53,4100,Sonstige Erlöse,CC100,PC-TRAIN,,Krankenhaus Nordwest,RE100125,Laboranalysen Mai
+2025-05-21,54257.86,4000,Umsatzerlöse Labordiagnostik,CC200,PC-CONSULT,,MVZ Labor Bremen,RE100157,Rahmenvertrag Abrechnung
+2025-05-21,-51470.71,5000,Material Reagenzien,CC200,PC-DIAG,Siemens Healthineers,,BK100190,Reagenzien Mai
+2025-05-21,-8191.85,5020,Fremdleistungen Labor,CC100,PC-TRAIN,Sonic Healthcare,,BK100265,Auftragsanalyse
+2025-05-21,-5551.67,6600,Versicherungen,CC500,PC-TRAIN,AXA,,BK100350,Geräteversicherung
+2025-05-21,-7118.46,6700,Marketing,CC100,PC-DIAG,Agentur Kreativ,,BK100375,Broschüren
+2025-05-22,67209.75,4000,Umsatzerlöse Labordiagnostik,CC300,PC-DIAG,,Universitätsklinikum München,RE100053,Schulung Laborpersonal
+2025-05-22,30239.18,4010,Umsatzerlöse Beratung,CC300,PC-TRAIN,,Charité Berlin,RE100095,Projektabrechnung Q2
+2025-05-22,-3247.81,5010,Material Verbrauchsmittel,CC500,PC-DIAG,VWR International,,BK100237,Verbrauchsmaterial Mai
+2025-05-22,-9753.69,6300,IT-Kosten,CC400,PC-DIAG,IT-Service Partner,,BK100305,SAP Lizenzen Q2
+2025-05-22,-10698.45,6400,Reisekosten,CC100,PC-ADMIN,Booking.com,,BK100330,Kongress Teilnahme
+2025-05-22,-19263.06,6700,Marketing,CC100,PC-DIAG,Google Ads,,BK100360,Online Kampagne Mai
+2025-05-23,4805.52,4100,Sonstige Erlöse,CC300,PC-TRAIN,,Charité Berlin,RE100016,Diagnostik Auftrag 100016
+2025-05-23,73991.46,4000,Umsatzerlöse Labordiagnostik,CC100,PC-CONSULT,,Charité Berlin,RE100056,Laboranalysen Mai
+2025-05-23,9286.25,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Charité Berlin,RE100074,Schulung Laborpersonal
+2025-05-23,29774.03,4010,Umsatzerlöse Beratung,CC100,PC-CONSULT,,Universitätsklinikum München,RE100110,Diagnostik Auftrag 100110
+2025-05-23,7227.02,4100,Sonstige Erlöse,CC100,PC-DIAG,,Labor Gemeinschaft Bayern,RE100142,Beratungsleistung
+2025-05-23,-16037.07,6600,Versicherungen,CC200,PC-DIAG,AXA,,BK100356,Betriebshaftpflicht Q2
+2025-05-24,63287.45,4000,Umsatzerlöse Labordiagnostik,CC100,PC-TRAIN,,Uniklinik Köln,RE100059,Schulung Laborpersonal
+2025-05-24,4523.17,4020,Umsatzerlöse Schulungen,CC100,PC-DIAG,,Praxis Dr. Weber,RE100073,Schulung Laborpersonal
+2025-05-24,31003.12,4000,Umsatzerlöse Labordiagnostik,CC200,PC-TRAIN,,Praxis Dr. Weber,RE100145,Diagnostik Auftrag 100145
+2025-05-24,7130.99,4020,Umsatzerlöse Schulungen,CC300,PC-DIAG,,MVZ Labor Bremen,RE100150,Diagnostik Auftrag 100150
+2025-05-24,-12063.69,5000,Material Reagenzien,CC200,PC-TRAIN,Roche Diagnostics,,BK100187,Lieferung Testkits
+2025-05-24,-17840.38,5010,Material Verbrauchsmittel,CC100,PC-DIAG,VWR International,,BK100255,Verbrauchsmaterial Mai
+2025-05-24,-3153.44,5020,Fremdleistungen Labor,CC400,PC-CONSULT,Sonic Healthcare,,BK100270,Externe Laborleistung
+2025-05-24,-4793.66,6300,IT-Kosten,CC300,PC-CONSULT,IT-Service Partner,,BK100310,SAP Lizenzen Q2
+2025-05-25,12698.16,4020,Umsatzerlöse Schulungen,CC300,PC-DIAG,,Universitätsklinikum München,RE100133,Schulung Laborpersonal
+2025-05-25,-7793.2,6200,Wartung Geräte,CC400,PC-CONSULT,Siemens Healthineers,,BK100299,Große Revision Cobas
+2025-05-25,-8456.01,6600,Versicherungen,CC200,PC-TRAIN,AXA,,BK100357,Betriebshaftpflicht Q2
+2025-05-25,-13031.58,6900,Sonstige Aufwendungen,CC200,PC-CONSULT,Diverse,,BK100386,Bürobedarf
+2025-05-25,-11454.54,6900,Sonstige Aufwendungen,CC400,PC-ADMIN,Diverse,,BK100387,Kleinmaterial
+2025-05-26,7767.68,4100,Sonstige Erlöse,CC200,PC-DIAG,,Universitätsklinikum München,RE100018,Diagnostik Auftrag 100018
+2025-05-26,23285.84,4010,Umsatzerlöse Beratung,CC200,PC-TRAIN,,Universitätsklinikum München,RE100050,Diagnostik Auftrag 100050
+2025-05-26,1710.0,4100,Sonstige Erlöse,CC300,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100122,Laboranalysen Mai
+2025-05-26,-14031.69,5010,Material Verbrauchsmittel,CC300,PC-ADMIN,Merck,,BK100239,Pipettenspitzen
+2025-05-26,-14460.24,6800,Fortbildung,CC100,PC-DIAG,Springer Verlag,,BK100380,Zertifizierung
+2025-05-26,-6705.75,6900,Sonstige Aufwendungen,CC200,PC-DIAG,Diverse,,BK100392,Bürobedarf
+2025-05-27,16798.93,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Charité Berlin,RE100011,Projektabrechnung Q2
+2025-05-27,4683.56,4020,Umsatzerlöse Schulungen,CC200,PC-TRAIN,,Universitätsklinikum München,RE100034,Beratungsleistung
+2025-05-27,45200.12,4000,Umsatzerlöse Labordiagnostik,CC300,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100128,Laboranalysen Mai
+2025-05-27,-32310.23,5000,Material Reagenzien,CC200,PC-TRAIN,Siemens Healthineers,,BK100217,Chemikalien Q2
+2025-05-27,-7830.23,5010,Material Verbrauchsmittel,CC300,PC-ADMIN,Merck,,BK100252,Verbrauchsmaterial Mai
+2025-05-27,-6253.65,6300,IT-Kosten,CC400,PC-ADMIN,IT-Service Partner,,BK100301,SAP Lizenzen Q2
+2025-05-27,-1239.69,6600,Versicherungen,CC400,PC-CONSULT,Allianz,,BK100358,Geräteversicherung
+2025-05-27,-9251.78,6900,Sonstige Aufwendungen,CC500,PC-DIAG,Diverse,,BK100395,Sonstiges Mai
+2025-05-28,6472.0,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Charité Berlin,RE100043,Laboranalysen Mai
+2025-05-28,7431.38,4100,Sonstige Erlöse,CC300,PC-DIAG,,Uniklinik Köln,RE100044,Laboranalysen Mai
+2025-05-28,14392.84,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Praxis Dr. Weber,RE100088,Beratungsleistung
+2025-05-28,95652.22,4000,Umsatzerlöse Labordiagnostik,CC300,PC-DIAG,,Uniklinik Köln,RE100116,Projektabrechnung Q2
+2025-05-28,-3521.26,6200,Wartung Geräte,CC200,PC-ADMIN,Siemens Healthineers,,BK100282,Große Revision Cobas
+2025-06-01,12347.64,4020,Umsatzerlöse Schulungen,CC300,PC-CONSULT,,Städtisches Klinikum Stuttgart,RE100062,Projektabrechnung Q2
+2025-06-01,11169.07,4020,Umsatzerlöse Schulungen,CC300,PC-CONSULT,,MVZ Labor Bremen,RE100159,Beratungsleistung
+2025-06-01,-10534.9,5020,Fremdleistungen Labor,CC200,PC-CONSULT,Synlab,,BK100267,Externe Laborleistung
+2025-06-01,-7500.36,6200,Wartung Geräte,CC400,PC-TRAIN,TechService GmbH,,BK100286,Inspektion Automat
+2025-06-01,-12652.43,6200,Wartung Geräte,CC500,PC-ADMIN,TechService GmbH,,BK100293,Große Revision Cobas
+2025-06-01,-5961.04,6300,IT-Kosten,CC100,PC-DIAG,Microsoft,,BK100302,Serverkosten Juni
+2025-06-02,3947.46,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Uniklinik Köln,RE100135,Diagnostik Auftrag 100135
+2025-06-02,3832.19,4100,Sonstige Erlöse,CC300,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100160,Beratungsleistung
+2025-06-02,-39652.17,5000,Material Reagenzien,CC400,PC-ADMIN,Roche Diagnostics,,BK100178,Reagenzien Juni
+2025-06-02,-5518.61,5000,Material Reagenzien,CC500,PC-ADMIN,Abbott,,BK100219,Lieferung Testkits
+2025-06-02,-7316.88,6200,Wartung Geräte,CC200,PC-DIAG,Siemens Healthineers,,BK100298,Wartung Analysegerät
+2025-06-02,-17112.2,6300,IT-Kosten,CC300,PC-ADMIN,Microsoft,,BK100313,Serverkosten Juni
+2025-06-03,-48570.28,5000,Material Reagenzien,CC400,PC-TRAIN,Roche Diagnostics,,BK100185,Lieferung Testkits
+2025-06-04,-9211.66,5000,Material Reagenzien,CC100,PC-TRAIN,Siemens Healthineers,,BK100204,Chemikalien Q2
+2025-06-04,-7577.4,5000,Material Reagenzien,CC200,PC-TRAIN,Siemens Healthineers,,BK100215,Reagenzien Juni
+2025-06-04,-8520.36,6700,Marketing,CC100,PC-ADMIN,Agentur Kreativ,,BK100363,Online Kampagne Juni
+2025-06-04,-15559.38,6800,Fortbildung,CC400,PC-ADMIN,Springer Verlag,,BK100383,Zertifizierung
+2025-06-05,2416.23,4100,Sonstige Erlöse,CC300,PC-CONSULT,,Uniklinik Köln,RE100052,Beratungsleistung
+2025-06-05,94579.09,4000,Umsatzerlöse Labordiagnostik,CC300,PC-CONSULT,,Praxis Dr. Weber,RE100137,Rahmenvertrag Abrechnung
+2025-06-05,-9478.19,5020,Fremdleistungen Labor,CC500,PC-CONSULT,Synlab,,BK100260,Auftragsanalyse
+2025-06-05,-182236.48,6000,Personalkosten Gehälter,CC200,PC-ADMIN,Lohnbüro Müller,,BK100273,Lohnabrechnung Juni
+2025-06-05,-13823.82,6200,Wartung Geräte,CC400,PC-ADMIN,Siemens Healthineers,,BK100281,Wartung Analysegerät
+2025-06-06,23990.13,4010,Umsatzerlöse Beratung,CC300,PC-TRAIN,,Universitätsklinikum München,RE100012,Rahmenvertrag Abrechnung
+2025-06-06,45830.61,4000,Umsatzerlöse Labordiagnostik,CC300,PC-TRAIN,,MVZ Labor Bremen,RE100030,Projektabrechnung Q2
+2025-06-06,-205890.37,6000,Personalkosten Gehälter,CC100,PC-CONSULT,Lohnbüro Müller,,BK100271,Lohnabrechnung Juni
+2025-06-06,-2140.69,6400,Reisekosten,CC100,PC-ADMIN,Deutsche Bahn,,BK100326,Kongress Teilnahme
+2025-06-07,3721.85,4100,Sonstige Erlöse,CC100,PC-CONSULT,,Charité Berlin,RE100027,Projektabrechnung Q2
+2025-06-07,-12501.74,5000,Material Reagenzien,CC400,PC-CONSULT,Beckman Coulter,,BK100205,Lieferung Testkits
+2025-06-08,14052.46,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Charité Berlin,RE100117,Schulung Laborpersonal
+2025-06-08,-8359.14,6200,Wartung Geräte,CC100,PC-CONSULT,Siemens Healthineers,,BK100291,Service Zentrifuge
+2025-06-09,4423.68,4100,Sonstige Erlöse,CC100,PC-TRAIN,,Krankenhaus Nordwest,RE100130,Laboranalysen Juni
+2025-06-09,-5505.64,6400,Reisekosten,CC300,PC-TRAIN,Deutsche Bahn,,BK100319,Kundenbesuch
+2025-06-10,-7459.35,6300,IT-Kosten,CC300,PC-TRAIN,SAP Deutschland,,BK100303,Serverkosten Juni
+2025-06-10,-9811.29,6400,Reisekosten,CC300,PC-ADMIN,Lufthansa,,BK100331,Dienstreise Juni
+2025-06-10,-9420.05,6500,Beratungskosten,CC500,PC-CONSULT,McKinsey,,BK100340,Strategieberatung
+2025-06-11,4694.01,4100,Sonstige Erlöse,CC300,PC-CONSULT,,Krankenhaus Nordwest,RE100029,Projektabrechnung Q2
+2025-06-11,5979.16,4020,Umsatzerlöse Schulungen,CC200,PC-DIAG,,Praxis Dr. Weber,RE100079,Diagnostik Auftrag 100079
+2025-06-11,83176.4,4000,Umsatzerlöse Labordiagnostik,CC200,PC-DIAG,,MVZ Labor Bremen,RE100119,Laboranalysen Juni
+2025-06-11,23952.75,4000,Umsatzerlöse Labordiagnostik,CC200,PC-TRAIN,,Labor Gemeinschaft Bayern,RE100138,Diagnostik Auftrag 100138
+2025-06-11,-9310.63,5000,Material Reagenzien,CC500,PC-DIAG,Beckman Coulter,,BK100206,Reagenzien Juni
+2025-06-11,-5935.61,6400,Reisekosten,CC500,PC-TRAIN,Deutsche Bahn,,BK100327,Kundenbesuch
+2025-06-11,-16065.18,6900,Sonstige Aufwendungen,CC500,PC-DIAG,Diverse,,BK100393,Kleinmaterial
+2025-06-12,29746.89,4010,Umsatzerlöse Beratung,CC300,PC-CONSULT,,Uniklinik Köln,RE100042,Beratungsleistung
+2025-06-12,-10342.57,6200,Wartung Geräte,CC200,PC-ADMIN,Siemens Healthineers,,BK100288,Große Revision Cobas
+2025-06-12,-4582.85,6500,Beratungskosten,CC400,PC-CONSULT,KPMG,,BK100348,Prozessoptimierung
+2025-06-12,-7149.94,6700,Marketing,CC500,PC-CONSULT,Google Ads,,BK100370,Messebeteiligung
+2025-06-13,88106.79,4000,Umsatzerlöse Labordiagnostik,CC300,PC-TRAIN,,MVZ Labor Bremen,RE100084,Diagnostik Auftrag 100084
+2025-06-13,11454.46,4020,Umsatzerlöse Schulungen,CC300,PC-DIAG,,Praxis Dr. Weber,RE100112,Beratungsleistung
+2025-06-13,21512.89,4010,Umsatzerlöse Beratung,CC300,PC-CONSULT,,Krankenhaus Nordwest,RE100166,Diagnostik Auftrag 100166
+2025-06-13,-12432.97,6200,Wartung Geräte,CC200,PC-ADMIN,Siemens Healthineers,,BK100292,Wartung Analysegerät
+2025-06-13,-14168.22,6200,Wartung Geräte,CC500,PC-DIAG,Roche Diagnostics,,BK100295,Inspektion Automat
+2025-06-13,-7805.18,6700,Marketing,CC100,PC-ADMIN,Agentur Kreativ,,BK100368,Messebeteiligung
+2025-06-14,13032.45,4010,Umsatzerlöse Beratung,CC200,PC-DIAG,,Städtisches Klinikum Stuttgart,RE100026,Schulung Laborpersonal
+2025-06-14,7025.7,4100,Sonstige Erlöse,CC200,PC-TRAIN,,Uniklinik Köln,RE100065,Schulung Laborpersonal
+2025-06-14,-38552.64,5000,Material Reagenzien,CC500,PC-CONSULT,Beckman Coulter,,BK100208,Lieferung Testkits
+2025-06-15,16112.97,4010,Umsatzerlöse Beratung,CC200,PC-CONSULT,,Krankenhaus Nordwest,RE100144,Projektabrechnung Q2
+2025-06-15,-19355.05,6300,IT-Kosten,CC200,PC-TRAIN,IT-Service Partner,,BK100304,Microsoft 365
+2025-06-15,-3567.18,6500,Beratungskosten,CC200,PC-ADMIN,KPMG,,BK100342,Gutachten
+2025-06-15,-12736.86,6600,Versicherungen,CC200,PC-TRAIN,AXA,,BK100352,Geräteversicherung
+2025-06-15,-11621.47,6700,Marketing,CC500,PC-CONSULT,Google Ads,,BK100369,Online Kampagne Juni
+2025-06-17,5664.01,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100019,Schulung Laborpersonal
+2025-06-17,9771.66,4010,Umsatzerlöse Beratung,CC200,PC-DIAG,,Universitätsklinikum München,RE100146,Laboranalysen Juni
+2025-06-17,-13037.77,5020,Fremdleistungen Labor,CC300,PC-CONSULT,Bioscientia,,BK100264,Auftragsanalyse
+2025-06-17,-9741.34,6400,Reisekosten,CC100,PC-CONSULT,Booking.com,,BK100317,Dienstreise Juni
+2025-06-18,13145.03,4020,Umsatzerlöse Schulungen,CC100,PC-CONSULT,,Charité Berlin,RE100162,Schulung Laborpersonal
+2025-06-18,-32772.48,5000,Material Reagenzien,CC300,PC-ADMIN,Abbott,,BK100213,Reagenzien Juni
+2025-06-18,-2389.75,5010,Material Verbrauchsmittel,CC300,PC-DIAG,Merck,,BK100247,Pipettenspitzen
+2025-06-18,-9969.98,5020,Fremdleistungen Labor,CC400,PC-CONSULT,Synlab,,BK100257,Externe Laborleistung
+2025-06-18,-16037.86,6700,Marketing,CC200,PC-TRAIN,Agentur Kreativ,,BK100366,Messebeteiligung
+2025-06-19,7693.61,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Uniklinik Köln,RE100020,Beratungsleistung
+2025-06-19,-42706.95,5000,Material Reagenzien,CC400,PC-DIAG,Beckman Coulter,,BK100214,Nachbestellung Assays
+2025-06-19,-1864.82,5010,Material Verbrauchsmittel,CC500,PC-DIAG,VWR International,,BK100238,Handschuhe Nachbestellung
+2025-06-19,-8697.55,5020,Fremdleistungen Labor,CC100,PC-TRAIN,Sonic Healthcare,,BK100256,Fremdanalyse Spezialtest
+2025-06-19,-41376.23,6010,Personalkosten Sozialabgaben,CC100,PC-CONSULT,Lohnbüro Müller,,BK100274,Sozialabgaben Juni 2025
+2025-06-19,-13347.44,6400,Reisekosten,CC300,PC-TRAIN,Booking.com,,BK100329,Dienstreise Juni
+2025-06-19,-8690.68,6500,Beratungskosten,CC200,PC-TRAIN,McKinsey,,BK100332,Strategieberatung
+2025-06-20,24154.19,4000,Umsatzerlöse Labordiagnostik,CC200,PC-CONSULT,,Universitätsklinikum München,RE100003,Beratungsleistung
+2025-06-20,8167.39,4020,Umsatzerlöse Schulungen,CC100,PC-CONSULT,,Praxis Dr. Weber,RE100009,Projektabrechnung Q2
+2025-06-20,-38725.6,5000,Material Reagenzien,CC500,PC-TRAIN,Abbott,,BK100224,Chemikalien Q2
+2025-06-20,-3944.85,6700,Marketing,CC200,PC-ADMIN,Agentur Kreativ,,BK100364,Online Kampagne Juni
+2025-06-20,-9417.23,6800,Fortbildung,CC500,PC-TRAIN,Springer Verlag,,BK100385,Fachkongress
+2025-06-21,13332.58,4020,Umsatzerlöse Schulungen,CC200,PC-DIAG,,Uniklinik Köln,RE100041,Laboranalysen Juni
+2025-06-21,11552.89,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Krankenhaus Nordwest,RE100154,Beratungsleistung
+2025-06-21,-36685.09,5000,Material Reagenzien,CC500,PC-DIAG,Beckman Coulter,,BK100177,Nachbestellung Assays
+2025-06-21,-25499.5,5000,Material Reagenzien,CC500,PC-ADMIN,Siemens Healthineers,,BK100198,Chemikalien Q2
+2025-06-21,-6707.47,6900,Sonstige Aufwendungen,CC100,PC-TRAIN,Diverse,,BK100394,Sonstiges Juni
+2025-06-22,12279.95,4020,Umsatzerlöse Schulungen,CC300,PC-DIAG,,Städtisches Klinikum Stuttgart,RE100076,Rahmenvertrag Abrechnung
+2025-06-22,-43464.53,5000,Material Reagenzien,CC100,PC-CONSULT,Siemens Healthineers,,BK100195,Reagenzien Juni
+2025-06-22,-23248.32,5000,Material Reagenzien,CC100,PC-CONSULT,Abbott,,BK100201,Nachbestellung Assays
+2025-06-22,-6879.2,5000,Material Reagenzien,CC400,PC-TRAIN,Beckman Coulter,,BK100218,Chemikalien Q2
+2025-06-23,21140.1,4010,Umsatzerlöse Beratung,CC300,PC-DIAG,,Uniklinik Köln,RE100033,Schulung Laborpersonal
+2025-06-23,74491.79,4000,Umsatzerlöse Labordiagnostik,CC200,PC-DIAG,,Krankenhaus Nordwest,RE100048,Laboranalysen Juni
+2025-06-23,5090.43,4020,Umsatzerlöse Schulungen,CC300,PC-CONSULT,,Städtisches Klinikum Stuttgart,RE100114,Rahmenvertrag Abrechnung
+2025-06-23,18216.37,4010,Umsatzerlöse Beratung,CC200,PC-DIAG,,Uniklinik Köln,RE100115,Rahmenvertrag Abrechnung
+2025-06-23,-15245.06,6500,Beratungskosten,CC400,PC-DIAG,McKinsey,,BK100336,Strategieberatung
+2025-06-24,-29707.92,5000,Material Reagenzien,CC100,PC-ADMIN,Abbott,,BK100181,Reagenzien Juni
+2025-06-24,-17286.12,5020,Fremdleistungen Labor,CC500,PC-DIAG,Synlab,,BK100258,Externe Laborleistung
+2025-06-24,-10186.56,5020,Fremdleistungen Labor,CC200,PC-ADMIN,Bioscientia,,BK100261,Fremdanalyse Spezialtest
+2025-06-24,-13081.17,6500,Beratungskosten,CC500,PC-TRAIN,KPMG,,BK100343,Prozessoptimierung
+2025-06-25,10542.85,4020,Umsatzerlöse Schulungen,CC200,PC-CONSULT,,Krankenhaus Nordwest,RE100067,Diagnostik Auftrag 100067
+2025-06-25,7688.78,4020,Umsatzerlöse Schulungen,CC300,PC-TRAIN,,Charité Berlin,RE100069,Beratungsleistung
+2025-06-25,1347.56,4100,Sonstige Erlöse,CC100,PC-DIAG,,Städtisches Klinikum Stuttgart,RE100151,Rahmenvertrag Abrechnung
+2025-06-25,5260.32,4020,Umsatzerlöse Schulungen,CC100,PC-DIAG,,Krankenhaus Nordwest,RE100158,Rahmenvertrag Abrechnung
+2025-06-25,-13011.68,6900,Sonstige Aufwendungen,CC500,PC-DIAG,Diverse,,BK100396,Kleinmaterial
+2025-06-26,25479.03,4010,Umsatzerlöse Beratung,CC100,PC-DIAG,,MVZ Labor Bremen,RE100153,Projektabrechnung Q2
+2025-06-26,26530.59,4010,Umsatzerlöse Beratung,CC200,PC-TRAIN,,Praxis Dr. Weber,RE100161,Projektabrechnung Q2
+2025-06-26,28004.81,4010,Umsatzerlöse Beratung,CC300,PC-DIAG,,Praxis Dr. Weber,RE100163,Rahmenvertrag Abrechnung
+2025-06-26,-17475.64,5010,Material Verbrauchsmittel,CC100,PC-CONSULT,Merck,,BK100242,Handschuhe Nachbestellung
+2025-06-26,-9690.75,6200,Wartung Geräte,CC500,PC-ADMIN,TechService GmbH,,BK100289,Inspektion Automat
+2025-06-26,-13248.27,6700,Marketing,CC200,PC-DIAG,Google Ads,,BK100367,Messebeteiligung
+2025-06-27,62919.16,4000,Umsatzerlöse Labordiagnostik,CC200,PC-DIAG,,Universitätsklinikum München,RE100087,Schulung Laborpersonal
+2025-06-27,35718.12,4000,Umsatzerlöse Labordiagnostik,CC300,PC-DIAG,,Städtisches Klinikum Stuttgart,RE100105,Projektabrechnung Q2
+2025-06-27,-10135.27,5000,Material Reagenzien,CC500,PC-ADMIN,Beckman Coulter,,BK100209,Nachbestellung Assays
+2025-06-27,-6243.19,6900,Sonstige Aufwendungen,CC100,PC-ADMIN,Diverse,,BK100390,Sonstiges Juni
+2025-06-28,7759.39,4100,Sonstige Erlöse,CC200,PC-TRAIN,,Städtisches Klinikum Stuttgart,RE100134,Schulung Laborpersonal
+2025-06-28,-24769.34,5000,Material Reagenzien,CC400,PC-TRAIN,Roche Diagnostics,,BK100194,Lieferung Testkits
+2025-06-28,-23771.56,5000,Material Reagenzien,CC100,PC-ADMIN,Beckman Coulter,,BK100196,Lieferung Testkits
+2025-06-28,-10738.5,5010,Material Verbrauchsmittel,CC200,PC-TRAIN,VWR International,,BK100245,Pipettenspitzen
+2025-06-28,-34093.39,6100,Miete Laborräume,CC200,PC-DIAG,Immobilien AG,,BK100279,Nebenkosten Q2
+2025-06-28,-6219.93,6300,IT-Kosten,CC300,PC-ADMIN,SAP Deutschland,,BK100314,Serverkosten Juni
+2025-06-28,-7917.43,6700,Marketing,CC100,PC-ADMIN,Agentur Kreativ,,BK100373,Messebeteiligung

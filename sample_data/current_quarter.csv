@@ -1,7 +1,0 @@
-posting_date,amount,account,account_name,cost_center,vendor,text
-2025-01-15,12500,6000,Personalkosten,CC100,V001,Gehalt Januar
-2025-02-15,13000,6000,Personalkosten,CC100,V001,Gehalt Februar
-2025-03-15,12800,6000,Personalkosten,CC100,V001,Gehalt Maerz
-2025-01-20,8500,6200,IT-Kosten,CC200,V020,Server Wartung
-2025-02-10,45000,6200,IT-Kosten,CC200,V022,ERP Migration Projekt
-2025-03-05,5200,6300,Materialkosten,CC100,V030,Rohstoffe

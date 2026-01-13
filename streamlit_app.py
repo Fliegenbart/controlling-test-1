@@ -224,9 +224,9 @@ with st.sidebar:
     ollama_model = st.text_input("Model", ollama_config["model"])
 
     if is_available(ollama_url):
-        st.success("Connected", icon="✓")
+        st.success("Connected", icon="✅")
     else:
-        st.error("Not available", icon="✗")
+        st.error("Not available", icon="❌")
 
 # --- Main Content ---
 st.markdown("# Variance Copilot")

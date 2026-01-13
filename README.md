@@ -22,10 +22,34 @@ ollama pull llama3.2
 ## App starten
 
 ```bash
-streamlit run app/app.py
+streamlit run streamlit_app.py
 ```
 
 Öffnet http://localhost:8501.
+
+## Sample-Daten
+
+Im Ordner `sample_data/` liegen synthetische Testdaten:
+
+| Datei | Zeitraum | Zeilen |
+|-------|----------|--------|
+| `buchungen_Q2_2024_fiktiv.csv` | April–Juni 2024 | ~370 |
+| `buchungen_Q2_2025_fiktiv.csv` | April–Juni 2025 | ~400 |
+
+**Eingebaute Effekte in 2025:**
+- **Account 5000** (Material Reagenzien): Höhere Kosten bei Roche und Siemens Healthineers
+- **Account 6200** (Wartung): One-off Buchung -120.000 EUR (Dokument BK999999)
+- **Account 4000** (Umsatzerlöse): ~10-15% mehr Umsatz als 2024
+
+**Konvention:** Umsatz positiv, Aufwand negativ.
+
+### Daten neu generieren
+
+```bash
+python scripts/generate_sample_data.py
+```
+
+Das Skript erzeugt reproduzierbare Daten (seed=42).
 
 ## Tests
 
@@ -45,7 +69,7 @@ OLLAMA_TIMEOUT=120
 
 ```
 variance_copilot/
-├── app/app.py               # Streamlit UI
+├── streamlit_app.py         # Streamlit UI
 ├── variance_copilot/
 │   ├── io.py                # CSV Reader
 │   ├── normalize.py         # Spalten-Mapping
@@ -53,8 +77,12 @@ variance_copilot/
 │   ├── keywords.py          # Text-Analyse
 │   ├── ollama_client.py     # Ollama API
 │   └── prompts.py           # LLM Prompts
-├── tests/
+├── scripts/
+│   └── generate_sample_data.py
 ├── sample_data/
+│   ├── buchungen_Q2_2024_fiktiv.csv
+│   └── buchungen_Q2_2025_fiktiv.csv
+├── tests/
 └── pyproject.toml
 ```
 
