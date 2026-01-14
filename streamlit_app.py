@@ -1077,10 +1077,10 @@ with st.sidebar:
         st.warning("Demodaten nicht gefunden")
 
     st.markdown("---")
-    st.markdown("### Materialitat")
+    st.markdown("### Materialität")
     st.caption("Nur wesentliche Abweichungen anzeigen")
     min_abs_delta = st.number_input("Min. |Abweichung|", 0, 1000000, 10000, 1000, help="Mindestbetrag der absoluten Abweichung")
-    min_pct_delta = st.number_input("Min. Abweichung %", 0, 100, 10, 5, help="Mindest-Prozentuale Anderung") / 100
+    min_pct_delta = st.number_input("Min. Abweichung %", 0, 100, 10, 5, help="Mindest-Prozentuale Änderung") / 100
     min_base = st.number_input("Min. Basiswert", 0, 1000000, 5000, 1000, help="Mindestbetrag im Vorjahr oder aktuell")
     min_share_total = st.number_input("Min. Anteil %", 0, 100, 3, 1, help="Mindestanteil an der Gesamtabweichung") / 100
 
@@ -1137,7 +1137,7 @@ st.markdown("""
 <div class="app-header">
     <h1>Clarity</h1>
     <p class="subtitle">Quartalsabweichungen verstehen. In Sekunden statt Stunden.</p>
-    <p class="value-prop">Laden Sie Ihre Buchungsdaten hoch und erhalten Sie sofort eine KI-gestutzte Analyse aller wesentlichen Abweichungen - komplett lokal auf Ihrem Rechner, ohne Cloud.</p>
+    <p class="value-prop">Laden Sie Ihre Buchungsdaten hoch und erhalten Sie sofort eine KI-gestützte Analyse aller wesentlichen Abweichungen - komplett lokal auf Ihrem Rechner, ohne Cloud.</p>
     <span class="badge">100% Lokal &amp; Privat</span>
 </div>
 """, unsafe_allow_html=True)
@@ -1148,7 +1148,7 @@ if st.session_state.demo_loaded and st.session_state.variance_df is not None:
     with col1:
         st.success(f"Demodaten geladen: {len(st.session_state.prior_df):,} + {len(st.session_state.curr_df):,} Buchungen")
     with col3:
-        if st.button("Zurucksetzen", type="secondary"):
+        if st.button("Zurücksetzen", type="secondary"):
             st.session_state.prior_df = None
             st.session_state.curr_df = None
             st.session_state.variance_df = None
@@ -1162,7 +1162,7 @@ else:
         <h3>Daten importieren</h3>
         <p class="exec-description">
             Laden Sie Ihre Buchungsdaten als CSV hoch. Sie benotigen zwei Dateien:
-            eine fur den Vorjahreszeitraum und eine fur den aktuellen Zeitraum.
+            eine für den Vorjahreszeitraum und eine für den aktuellen Zeitraum.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -1183,7 +1183,15 @@ if not st.session_state.demo_loaded and 'prior_file' in dir() and prior_file and
     st.success(f"Loaded: {len(raw_prior):,} + {len(raw_curr):,} rows")
 
     st.markdown("---")
-    st.markdown("### Column Mapping")
+    st.markdown("""
+    <div class="exec-intro">
+        <h3>Spalten-Zuordnung</h3>
+        <p class="exec-description">
+            Ihre CSV-Dateien haben eigene Spaltennamen. Ordnen Sie hier zu, welche Spalte
+            welche Bedeutung hat - z.B. welche Spalte den Betrag enthält, welche das Konto, etc.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     cols = [""] + list(raw_prior.columns)
 
@@ -1225,9 +1233,9 @@ if st.session_state.variance_df is not None:
     st.markdown("---")
     st.markdown("""
     <div class="exec-intro">
-        <h3>Ubersicht</h3>
+        <h3>Übersicht</h3>
         <p class="exec-description">
-            Ihre Daten auf einen Blick. Die Materialitatsfilter in der Seitenleiste
+            Ihre Daten auf einen Blick. Die Materialitätsfilter in der Seitenleiste
             helfen Ihnen, sich auf die wesentlichen Abweichungen zu konzentrieren.
         </p>
     </div>
@@ -1255,7 +1263,7 @@ if st.session_state.variance_df is not None:
         min_share_total=min_share_total if min_share_total > 0 else None,
     )
 
-    st.caption(f"{len(filtered)} von {len(st.session_state.variance_df)} Konten angezeigt (Materialitatsfilter aktiv)")
+    st.caption(f"{len(filtered)} von {len(st.session_state.variance_df)} Konten angezeigt (Materialitätsfilter aktiv)")
 
     display = filtered.copy()
     display["prior"] = display["prior"].apply(lambda x: f"{x:,.0f}")
@@ -1291,7 +1299,7 @@ if st.session_state.variance_df is not None:
         <p class="exec-description">
             Mit einem Klick analysiert die KI alle wesentlichen Abweichungen und erstellt
             eine Management-Zusammenfassung: Die wichtigsten Erkenntnisse, Muster zwischen
-            Konten und konkrete Handlungsempfehlungen - fertig fur Ihr nachstes Meeting.
+            Konten und konkrete Handlungsempfehlungen - fertig für Ihr nächstes Meeting.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -1301,7 +1309,7 @@ if st.session_state.variance_df is not None:
         exec_btn = st.button("Gesamtanalyse erstellen", type="primary", key="exec_summary", help="Analysiert alle materiellen Abweichungen und erstellt eine Executive Summary")
     with col_exec2:
         if not backend_status.available:
-            st.caption("KI-Backend nicht verfugbar")
+            st.caption("KI-Backend nicht verfügbar")
 
     if exec_btn:
         if not backend_status.available:
@@ -1457,9 +1465,9 @@ if st.session_state.variance_df is not None:
     <div class="exec-intro">
         <h3>Einzelkonto-Analyse</h3>
         <p class="exec-description">
-            Wahlen Sie ein Konto aus, um die Treiber der Abweichung zu verstehen.
+            Wählen Sie ein Konto aus, um die Treiber der Abweichung zu verstehen.
             Die KI analysiert Kostenstellen, Lieferanten und Buchungstexte, um
-            mogliche Ursachen zu identifizieren.
+            mögliche Ursachen zu identifizieren.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -1467,7 +1475,7 @@ if st.session_state.variance_df is not None:
     accounts = filtered["account"].tolist()
     if accounts:
         selected = st.selectbox(
-            "Konto auswahlen",
+            "Konto auswählen",
             accounts,
             format_func=lambda x: f"{x} - {filtered[filtered['account'] == x]['account_name'].iloc[0]}",
         )
@@ -1491,7 +1499,7 @@ if st.session_state.variance_df is not None:
 
         st.markdown("")
 
-        tab1, tab2, tab3 = st.tabs(["Treiber", "Buchungen", "Schlagworter"])
+        tab1, tab2, tab3 = st.tabs(["Treiber", "Buchungen", "Schlagwörter"])
 
         with tab1:
             st.caption("Welche Kostenstellen oder Lieferanten treiben die Abweichung?")
@@ -1506,18 +1514,18 @@ if st.session_state.variance_df is not None:
                 drv_display["share"] = drv_display["share"].apply(lambda x: f"{x:.0%}")
                 st.dataframe(drv_display, use_container_width=True, hide_index=True)
             else:
-                st.info("Keine Treiberdaten fur dieses Konto verfugbar")
+                st.info("Keine Treiberdaten für dieses Konto verfügbar")
 
         with tab2:
-            st.caption("Die grossten Einzelbuchungen im aktuellen Zeitraum")
+            st.caption("Die größten Einzelbuchungen im aktuellen Zeitraum")
             samples = samples_for_account(st.session_state.curr_df, selected)
             if not samples.empty:
                 st.dataframe(samples, use_container_width=True, hide_index=True)
             else:
-                st.info("Keine Buchungen fur dieses Konto gefunden")
+                st.info("Keine Buchungen für dieses Konto gefunden")
 
         with tab3:
-            st.caption("Haufige Begriffe in den Buchungstexten")
+            st.caption("Häufige Begriffe in den Buchungstexten")
             kw = keywords_for_account(st.session_state.curr_df, selected)
             if kw:
                 kw_html = " ".join(
@@ -1526,7 +1534,7 @@ if st.session_state.variance_df is not None:
                 )
                 st.markdown(kw_html, unsafe_allow_html=True)
             else:
-                st.info("Keine Schlagworter aus Buchungstexten extrahiert")
+                st.info("Keine Schlagwörter aus Buchungstexten extrahiert")
 
         # --- AI Comment ---
         st.markdown("---")
@@ -1534,9 +1542,9 @@ if st.session_state.variance_df is not None:
         <div class="exec-intro">
             <h3>KI-Kommentar</h3>
             <p class="exec-description">
-                Lassen Sie die KI einen Kommentar fur dieses Konto erstellen.
-                Basierend auf Treibern, Buchungen und Schlagwortern formuliert die KI
-                eine Erklarung der Abweichung mit Evidenz-Bewertung.
+                Lassen Sie die KI einen Kommentar für dieses Konto erstellen.
+                Basierend auf Treibern, Buchungen und Schlagwörtern formuliert die KI
+                eine Erklärung der Abweichung mit Evidenz-Bewertung.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -1652,6 +1660,6 @@ if st.session_state.variance_df is not None:
 # --- Footer ---
 st.markdown("""
 <div class="app-footer">
-    <p>Clarity <span class="dot"></span> Lauft 100% lokal <span class="dot"></span> Ihre Daten verlassen nie Ihren Rechner</p>
+    <p>Clarity <span class="dot"></span> Läuft 100% lokal <span class="dot"></span> Ihre Daten verlassen nie Ihren Rechner</p>
 </div>
 """, unsafe_allow_html=True)
