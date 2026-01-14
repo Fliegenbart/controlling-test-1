@@ -39,6 +39,10 @@ from variance_copilot.pdf_report import (
     generate_single_account_pdf,
     generate_executive_summary_pdf,
 )
+from variance_copilot.excel_report import (
+    generate_variance_excel,
+    generate_cost_center_summary,
+)
 
 # --- Page Config ---
 st.set_page_config(
@@ -864,6 +868,228 @@ if "demo_loaded" not in st.session_state:
     st.session_state.demo_loaded = False
 if "executive_summary" not in st.session_state:
     st.session_state.executive_summary = None
+# Multi-quarter trend data: list of {"period": "Q2 2024", "df": DataFrame}
+if "trend_periods" not in st.session_state:
+    st.session_state.trend_periods = []
+# Budget data for plan variance
+if "budget_df" not in st.session_state:
+    st.session_state.budget_df = None
+if "budget_variance_df" not in st.session_state:
+    st.session_state.budget_variance_df = None
+# Notes storage (persisted to JSON file)
+if "account_notes" not in st.session_state:
+    st.session_state.account_notes = {}
+# Email draft
+if "email_draft" not in st.session_state:
+    st.session_state.email_draft = None
+
+
+# --- Notes Persistence ---
+NOTES_FILE = Path(__file__).parent / ".clarity_notes.json"
+
+
+def load_notes() -> dict:
+    """Load account notes from JSON file."""
+    if NOTES_FILE.exists():
+        try:
+            import json
+            with open(NOTES_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+
+def save_notes(notes: dict):
+    """Save account notes to JSON file."""
+    import json
+    with open(NOTES_FILE, "w", encoding="utf-8") as f:
+        json.dump(notes, f, ensure_ascii=False, indent=2)
+
+
+# Load notes on startup
+if not st.session_state.account_notes:
+    st.session_state.account_notes = load_notes()
+
+
+# --- SAP/DATEV Import Presets ---
+IMPORT_PRESETS = {
+    "Standard CSV": {
+        "posting_date": "posting_date",
+        "amount": "amount",
+        "account": "account",
+        "account_name": "account_name",
+        "cost_center": "cost_center",
+        "vendor": "vendor",
+        "text": "text",
+    },
+    "SAP FI (deutsch)": {
+        "posting_date": "Buchungsdatum",
+        "amount": "Betrag",
+        "account": "Sachkonto",
+        "account_name": "Kontobezeichnung",
+        "cost_center": "Kostenstelle",
+        "vendor": "Kreditor",
+        "text": "Buchungstext",
+    },
+    "SAP FI (englisch)": {
+        "posting_date": "Posting Date",
+        "amount": "Amount",
+        "account": "G/L Account",
+        "account_name": "Account Name",
+        "cost_center": "Cost Center",
+        "vendor": "Vendor",
+        "text": "Text",
+    },
+    "DATEV Buchungsstapel": {
+        "posting_date": "Belegdatum",
+        "amount": "Umsatz",
+        "account": "Konto",
+        "account_name": "Konto-Bezeichnung",
+        "cost_center": "Kost1",
+        "vendor": "Gegenkonto",
+        "text": "Buchungstext",
+    },
+    "DATEV SKR03/SKR04": {
+        "posting_date": "Datum",
+        "amount": "Betrag",
+        "account": "Kontonummer",
+        "account_name": "Kontoname",
+        "cost_center": "Kostenstelle",
+        "vendor": "Lieferant",
+        "text": "Verwendungszweck",
+    },
+}
+
+
+def detect_preset(columns: list) -> str:
+    """Auto-detect import preset based on column names."""
+    col_set = set(c.lower() for c in columns)
+
+    # Check for SAP German
+    if "buchungsdatum" in col_set or "sachkonto" in col_set:
+        return "SAP FI (deutsch)"
+    # Check for SAP English
+    if "posting date" in col_set or "g/l account" in col_set:
+        return "SAP FI (englisch)"
+    # Check for DATEV
+    if "belegdatum" in col_set or "umsatz" in col_set:
+        return "DATEV Buchungsstapel"
+    if "kontonummer" in col_set and "kontoname" in col_set:
+        return "DATEV SKR03/SKR04"
+
+    return "Standard CSV"
+
+
+# --- Email Template Generator ---
+def generate_email_template(
+    executive_summary: dict,
+    period_info: str,
+    total_prior: float,
+    total_current: float,
+    total_delta: float,
+) -> str:
+    """Generate email template for management report."""
+    headline = executive_summary.get("headline", "Varianzanalyse")
+    key_findings = executive_summary.get("key_findings", [])
+    top_variances = executive_summary.get("top_variances", [])
+    recommendations = executive_summary.get("recommendations", [])
+
+    email = f"""Betreff: Controlling Report - {period_info}
+
+Sehr geehrte Damen und Herren,
+
+anbei der aktuelle Controlling-Report zur Quartalsabweichung.
+
+**Zusammenfassung:**
+{headline}
+
+**Kennzahlen:**
+- Vorjahr: {total_prior:,.0f} EUR
+- Aktuell: {total_current:,.0f} EUR
+- Abweichung: {total_delta:+,.0f} EUR ({total_delta/total_prior*100 if total_prior else 0:+.1f}%)
+
+"""
+    if key_findings:
+        email += "**Wichtigste Erkenntnisse:**\n"
+        for finding in key_findings[:3]:
+            if finding and isinstance(finding, str):
+                email += f"- {finding}\n"
+        email += "\n"
+
+    if top_variances:
+        email += "**Top Abweichungen:**\n"
+        for v in top_variances[:5]:
+            if isinstance(v, dict):
+                name = v.get("name", "")
+                delta = v.get("delta", 0)
+                reason = v.get("reason", "")
+                if name:
+                    email += f"- {name}: {delta:+,.0f} EUR"
+                    if reason:
+                        email += f" ({reason})"
+                    email += "\n"
+        email += "\n"
+
+    if recommendations:
+        email += "**Empfehlungen:**\n"
+        for rec in recommendations[:3]:
+            if rec and isinstance(rec, str):
+                email += f"- {rec}\n"
+        email += "\n"
+
+    email += """Den vollständigen Report finden Sie im Anhang.
+
+Mit freundlichen Grüßen,
+Ihr Controlling-Team
+
+---
+Dieser Report wurde mit Clarity erstellt.
+"""
+    return email
+
+
+def calculate_trend_data(periods: list) -> pd.DataFrame:
+    """Calculate trend data across multiple periods.
+
+    Args:
+        periods: List of {"period": str, "df": DataFrame} dicts
+
+    Returns:
+        DataFrame with accounts as rows and periods as columns
+    """
+    if len(periods) < 2:
+        return pd.DataFrame()
+
+    # Collect totals per account per period
+    all_accounts = set()
+    period_totals = {}
+
+    for p in periods:
+        period_name = p["period"]
+        df = p["df"]
+        totals = df.groupby("account")["amount"].sum()
+        period_totals[period_name] = totals
+        all_accounts.update(totals.index.tolist())
+
+    # Build result DataFrame
+    result_rows = []
+    period_names = [p["period"] for p in periods]
+
+    for acc in sorted(all_accounts):
+        row = {"account": acc}
+        for period_name in period_names:
+            row[period_name] = period_totals.get(period_name, {}).get(acc, 0)
+        result_rows.append(row)
+
+    result_df = pd.DataFrame(result_rows)
+
+    # Calculate period-over-period changes
+    for i, period_name in enumerate(period_names[1:], 1):
+        prev_period = period_names[i - 1]
+        result_df[f"delta_{period_name}"] = result_df[period_name] - result_df[prev_period]
+
+    return result_df
 
 
 def render_ai_analysis(data: dict, backend_name: str = ""):
@@ -1155,18 +1381,23 @@ if st.session_state.demo_loaded and st.session_state.variance_df is not None:
             st.session_state.demo_loaded = False
             st.session_state.comment_result = None
             st.session_state.executive_summary = None
+            st.session_state.trend_periods = []
+            st.session_state.budget_df = None
+            st.session_state.budget_variance_df = None
+            st.session_state.email_draft = None
             st.rerun()
 else:
     st.markdown("""
     <div class="exec-intro">
         <h3>Daten importieren</h3>
         <p class="exec-description">
-            Laden Sie Ihre Buchungsdaten als CSV hoch. Sie benotigen zwei Dateien:
+            Laden Sie Ihre Buchungsdaten als CSV hoch. Sie benötigen zwei Dateien:
             eine für den Vorjahreszeitraum und eine für den aktuellen Zeitraum.
+            Optional können Sie auch Budgetdaten für Plan/Ist-Vergleich hochladen.
         </p>
     </div>
     """, unsafe_allow_html=True)
-    col1, col2 = st.columns(2, gap="large")
+    col1, col2, col3 = st.columns(3, gap="large")
 
     with col1:
         st.markdown("**Vorjahr**")
@@ -1176,11 +1407,18 @@ else:
         st.markdown("**Aktueller Zeitraum**")
         curr_file = st.file_uploader("CSV hochladen", type=["csv"], key="curr", label_visibility="collapsed")
 
+    with col3:
+        st.markdown("**Budget (optional)**")
+        budget_file = st.file_uploader("CSV hochladen", type=["csv"], key="budget", label_visibility="collapsed")
+        st.caption("Für Plan/Ist-Vergleich")
+
 if not st.session_state.demo_loaded and 'prior_file' in dir() and prior_file and curr_file:
     raw_prior = load_csv(BytesIO(prior_file.read()))
     raw_curr = load_csv(BytesIO(curr_file.read()))
+    raw_budget = load_csv(BytesIO(budget_file.read())) if 'budget_file' in dir() and budget_file else None
 
-    st.success(f"Loaded: {len(raw_prior):,} + {len(raw_curr):,} rows")
+    budget_info = f" + {len(raw_budget):,} Budget" if raw_budget is not None else ""
+    st.success(f"Geladen: {len(raw_prior):,} + {len(raw_curr):,} Zeilen{budget_info}")
 
     st.markdown("---")
     st.markdown("""
@@ -1193,24 +1431,54 @@ if not st.session_state.demo_loaded and 'prior_file' in dir() and prior_file and
     </div>
     """, unsafe_allow_html=True)
 
+    # SAP/DATEV Preset Detection
+    detected_preset = detect_preset(list(raw_prior.columns))
+    preset_names = list(IMPORT_PRESETS.keys())
+    detected_idx = preset_names.index(detected_preset) if detected_preset in preset_names else 0
+
+    col_preset, col_info = st.columns([2, 3])
+    with col_preset:
+        selected_preset = st.selectbox(
+            "Format-Vorlage",
+            preset_names,
+            index=detected_idx,
+            help="Wählen Sie Ihr Quellsystem oder 'Standard CSV' für manuelle Zuordnung"
+        )
+    with col_info:
+        if detected_preset != "Standard CSV":
+            st.info(f"Erkannt: {detected_preset}")
+        else:
+            st.caption("SAP FI, DATEV und Standard-Formate werden automatisch erkannt")
+
+    preset = IMPORT_PRESETS[selected_preset]
     cols = [""] + list(raw_prior.columns)
+
+    # Helper to find column index
+    def find_col_idx(target_col):
+        if target_col in cols:
+            return cols.index(target_col)
+        # Try case-insensitive match
+        lower_cols = [c.lower() for c in cols]
+        if target_col.lower() in lower_cols:
+            return lower_cols.index(target_col.lower())
+        return 0
 
     c1, c2, c3 = st.columns(3, gap="medium")
     with c1:
-        map_date = st.selectbox("Date", cols, index=cols.index("posting_date") if "posting_date" in cols else 0)
-        map_amount = st.selectbox("Amount", cols, index=cols.index("amount") if "amount" in cols else 0)
+        map_date = st.selectbox("Datum", cols, index=find_col_idx(preset["posting_date"]))
+        map_amount = st.selectbox("Betrag", cols, index=find_col_idx(preset["amount"]))
     with c2:
-        map_account = st.selectbox("Account", cols, index=cols.index("account") if "account" in cols else 0)
-        map_name = st.selectbox("Account Name", cols, index=cols.index("account_name") if "account_name" in cols else 0)
+        map_account = st.selectbox("Konto", cols, index=find_col_idx(preset["account"]))
+        map_name = st.selectbox("Kontoname", cols, index=find_col_idx(preset["account_name"]))
     with c3:
-        map_cc = st.selectbox("Cost Center", cols, index=cols.index("cost_center") if "cost_center" in cols else 0)
-        map_vendor = st.selectbox("Vendor", cols, index=cols.index("vendor") if "vendor" in cols else 0)
-        map_text = st.selectbox("Description", cols, index=cols.index("text") if "text" in cols else 0)
+        map_cc = st.selectbox("Kostenstelle", cols, index=find_col_idx(preset["cost_center"]))
+        map_vendor = st.selectbox("Lieferant", cols, index=find_col_idx(preset["vendor"]))
+        map_text = st.selectbox("Buchungstext", cols, index=find_col_idx(preset["text"]))
 
     st.markdown("")
-    if st.button("Analyze", type="primary"):
+    if st.button("Analysieren", type="primary"):
         if not map_date or not map_amount or not map_account:
-            st.error("Required fields: Date, Amount, Account")
+            st.error("Pflichtfelder: Datum, Betrag, Konto")
         else:
             mapping = ColumnMapping(
                 posting_date=map_date,
@@ -1228,6 +1496,13 @@ if not st.session_state.demo_loaded and 'prior_file' in dir() and prior_file and
                 st.session_state.prior_df, st.session_state.curr_df
             )
 
+            # Process budget if uploaded
+            if raw_budget is not None:
+                st.session_state.budget_df = normalize(raw_budget, mapping, sign_mode)
+                st.session_state.budget_variance_df = variance_by_account(
+                    st.session_state.budget_df, st.session_state.curr_df
+                )
+
 # --- Variance Overview ---
 if st.session_state.variance_df is not None:
     st.markdown("---")
@@ -1242,16 +1517,27 @@ if st.session_state.variance_df is not None:
     """, unsafe_allow_html=True)
 
     # Summary metrics in a clean row
-    c1, c2, c3, c4 = st.columns(4, gap="medium")
+    has_budget = st.session_state.budget_df is not None
+    total_delta = st.session_state.curr_df['amount'].sum() - st.session_state.prior_df['amount'].sum()
+
+    if has_budget:
+        c1, c2, c3, c4, c5 = st.columns(5, gap="medium")
+        budget_delta = st.session_state.curr_df['amount'].sum() - st.session_state.budget_df['amount'].sum()
+    else:
+        c1, c2, c3, c4 = st.columns(4, gap="medium")
+
     with c1:
         st.metric("Vorjahr", f"{st.session_state.prior_df['amount'].sum():,.0f}")
     with c2:
         st.metric("Aktuell", f"{st.session_state.curr_df['amount'].sum():,.0f}")
     with c3:
-        total_delta = st.session_state.curr_df['amount'].sum() - st.session_state.prior_df['amount'].sum()
-        st.metric("Gesamtabweichung", f"{total_delta:+,.0f}")
+        st.metric("YoY Abweichung", f"{total_delta:+,.0f}")
     with c4:
         st.metric("Konten", f"{len(st.session_state.variance_df)}")
+
+    if has_budget:
+        with c5:
+            st.metric("Budget-Abw.", f"{budget_delta:+,.0f}")
 
     st.markdown("")
 
@@ -1263,33 +1549,244 @@ if st.session_state.variance_df is not None:
         min_share_total=min_share_total if min_share_total > 0 else None,
     )
 
-    st.caption(f"{len(filtered)} von {len(st.session_state.variance_df)} Konten angezeigt (Materialitätsfilter aktiv)")
+    # Tabs - include Budget tab if budget data available
+    if has_budget:
+        tab_konten, tab_budget, tab_kostenstellen, tab_trend = st.tabs([
+            "📋 YoY Vergleich", "🎯 Budget vs. Ist", "🏢 Kostenstellen", "📈 Trend"
+        ])
+    else:
+        tab_konten, tab_kostenstellen, tab_trend = st.tabs([
+            "📋 Nach Konten", "🏢 Nach Kostenstellen", "📈 Trend"
+        ])
 
-    display = filtered.copy()
-    display["prior"] = display["prior"].apply(lambda x: f"{x:,.0f}")
-    display["current"] = display["current"].apply(lambda x: f"{x:,.0f}")
-    display["delta"] = display["delta"].apply(lambda x: f"{x:+,.0f}")
-    display["delta_pct"] = display["delta_pct"].apply(lambda x: f"{x:+.1%}" if pd.notna(x) else "—")
-    display["abs_delta"] = display["abs_delta"].apply(lambda x: f"{x:,.0f}")
-    display["share_of_total_abs_delta"] = display["share_of_total_abs_delta"].apply(lambda x: f"{x:.1%}")
+    with tab_konten:
+        st.caption(f"{len(filtered)} von {len(st.session_state.variance_df)} Konten angezeigt (Materialitätsfilter aktiv)")
 
-    st.dataframe(
-        display[["account", "account_name", "prior", "current", "delta", "delta_pct", "abs_delta", "share_of_total_abs_delta"]].rename(
-            columns={
-                "account": "Konto",
-                "account_name": "Bezeichnung",
-                "prior": "Vorjahr",
-                "current": "Aktuell",
-                "delta": "Abweichung",
-                "delta_pct": "Abw. %",
-                "abs_delta": "|Abweichung|",
-                "share_of_total_abs_delta": "Anteil"
-            }
-        ),
-        use_container_width=True,
-        hide_index=True,
-        height=320,
-    )
+        display = filtered.copy()
+        display["prior"] = display["prior"].apply(lambda x: f"{x:,.0f}")
+        display["current"] = display["current"].apply(lambda x: f"{x:,.0f}")
+        display["delta"] = display["delta"].apply(lambda x: f"{x:+,.0f}")
+        display["delta_pct"] = display["delta_pct"].apply(lambda x: f"{x:+.1%}" if pd.notna(x) else "—")
+        display["abs_delta"] = display["abs_delta"].apply(lambda x: f"{x:,.0f}")
+        display["share_of_total_abs_delta"] = display["share_of_total_abs_delta"].apply(lambda x: f"{x:.1%}")
+
+        st.dataframe(
+            display[["account", "account_name", "prior", "current", "delta", "delta_pct", "abs_delta", "share_of_total_abs_delta"]].rename(
+                columns={
+                    "account": "Konto",
+                    "account_name": "Bezeichnung",
+                    "prior": "Vorjahr",
+                    "current": "Aktuell",
+                    "delta": "Abweichung",
+                    "delta_pct": "Abw. %",
+                    "abs_delta": "|Abweichung|",
+                    "share_of_total_abs_delta": "Anteil"
+                }
+            ),
+            use_container_width=True,
+            hide_index=True,
+            height=320,
+        )
+
+    # Budget tab content (only if budget data exists)
+    if has_budget:
+        with tab_budget:
+            st.caption("Plan/Ist-Vergleich: Aktuelle Werte vs. Budget")
+
+            budget_filtered = materiality_filter(
+                st.session_state.budget_variance_df,
+                min_abs_delta=min_abs_delta if min_abs_delta > 0 else None,
+                min_pct_delta=min_pct_delta if min_pct_delta > 0 else None,
+                min_base=min_base if min_base > 0 else None,
+                min_share_total=min_share_total if min_share_total > 0 else None,
+            )
+
+            st.caption(f"{len(budget_filtered)} von {len(st.session_state.budget_variance_df)} Konten mit wesentlicher Budget-Abweichung")
+
+            budget_display = budget_filtered.copy()
+            budget_display["prior"] = budget_display["prior"].apply(lambda x: f"{x:,.0f}")
+            budget_display["current"] = budget_display["current"].apply(lambda x: f"{x:,.0f}")
+            budget_display["delta"] = budget_display["delta"].apply(lambda x: f"{x:+,.0f}")
+            budget_display["delta_pct"] = budget_display["delta_pct"].apply(lambda x: f"{x:+.1%}" if pd.notna(x) else "—")
+            budget_display["abs_delta"] = budget_display["abs_delta"].apply(lambda x: f"{x:,.0f}")
+            budget_display["share_of_total_abs_delta"] = budget_display["share_of_total_abs_delta"].apply(lambda x: f"{x:.1%}")
+
+            st.dataframe(
+                budget_display[["account", "account_name", "prior", "current", "delta", "delta_pct", "abs_delta", "share_of_total_abs_delta"]].rename(
+                    columns={
+                        "account": "Konto",
+                        "account_name": "Bezeichnung",
+                        "prior": "Budget",
+                        "current": "Ist",
+                        "delta": "Abweichung",
+                        "delta_pct": "Abw. %",
+                        "abs_delta": "|Abweichung|",
+                        "share_of_total_abs_delta": "Anteil"
+                    }
+                ),
+                use_container_width=True,
+                hide_index=True,
+                height=320,
+            )
+
+            # Summary cards for budget
+            st.markdown("**Budget-Zusammenfassung**")
+            bc1, bc2, bc3 = st.columns(3)
+            with bc1:
+                over_budget = budget_filtered[budget_filtered["delta"] > 0]["delta"].sum()
+                st.metric("Überbudget", f"{over_budget:+,.0f}")
+            with bc2:
+                under_budget = budget_filtered[budget_filtered["delta"] < 0]["delta"].sum()
+                st.metric("Unterbudget", f"{under_budget:,.0f}")
+            with bc3:
+                budget_accuracy = 100 - abs(budget_delta / st.session_state.budget_df['amount'].sum() * 100) if st.session_state.budget_df['amount'].sum() else 100
+                st.metric("Budget-Genauigkeit", f"{budget_accuracy:.1f}%")
+
+    with tab_kostenstellen:
+        st.caption("Abweichungen aggregiert nach Kostenstellen")
+
+        # Generate cost center summary
+        cc_summary = generate_cost_center_summary(
+            st.session_state.prior_df,
+            st.session_state.curr_df,
+        )
+
+        # Apply materiality filter to cost centers
+        cc_filtered = cc_summary[cc_summary['abs_delta'] >= min_abs_delta] if min_abs_delta > 0 else cc_summary
+
+        st.caption(f"{len(cc_filtered)} von {len(cc_summary)} Kostenstellen angezeigt")
+
+        cc_display = cc_filtered.copy()
+        cc_display["prior"] = cc_display["prior"].apply(lambda x: f"{x:,.0f}")
+        cc_display["current"] = cc_display["current"].apply(lambda x: f"{x:,.0f}")
+        cc_display["delta"] = cc_display["delta"].apply(lambda x: f"{x:+,.0f}")
+        cc_display["delta_pct"] = cc_display["delta_pct"].apply(lambda x: f"{x:+.1%}" if pd.notna(x) else "—")
+        cc_display["abs_delta"] = cc_display["abs_delta"].apply(lambda x: f"{x:,.0f}")
+        cc_display["share"] = cc_display["share"].apply(lambda x: f"{x:.1%}")
+
+        st.dataframe(
+            cc_display[["cost_center", "prior", "current", "delta", "delta_pct", "abs_delta", "share"]].rename(
+                columns={
+                    "cost_center": "Kostenstelle",
+                    "prior": "Vorjahr",
+                    "current": "Aktuell",
+                    "delta": "Abweichung",
+                    "delta_pct": "Abw. %",
+                    "abs_delta": "|Abweichung|",
+                    "share": "Anteil"
+                }
+            ),
+            use_container_width=True,
+            hide_index=True,
+            height=320,
+        )
+
+    with tab_trend:
+        st.markdown("""
+        <p class="exec-description">
+            Vergleichen Sie mehrere Zeiträume, um Trends zu erkennen. Laden Sie zusätzliche
+            Quartale hoch, um die Entwicklung einzelner Konten über die Zeit zu visualisieren.
+        </p>
+        """, unsafe_allow_html=True)
+
+        # Initialize trend periods with current data if not already set
+        if len(st.session_state.trend_periods) == 0 and st.session_state.prior_df is not None:
+            st.session_state.trend_periods = [
+                {"period": "Vorjahr", "df": st.session_state.prior_df},
+                {"period": "Aktuell", "df": st.session_state.curr_df},
+            ]
+
+        # Upload additional periods
+        st.markdown("**Weitere Zeiträume hinzufügen**")
+        col_up1, col_up2 = st.columns([2, 1])
+        with col_up1:
+            trend_file = st.file_uploader(
+                "CSV für zusätzlichen Zeitraum",
+                type=["csv"],
+                key="trend_upload",
+                label_visibility="collapsed"
+            )
+        with col_up2:
+            trend_period_name = st.text_input("Zeitraum-Name", placeholder="z.B. Q3 2024", key="trend_period_name")
+
+        if trend_file and trend_period_name:
+            if st.button("Zeitraum hinzufügen", key="add_trend_period"):
+                raw_trend = load_csv(BytesIO(trend_file.read()))
+                # Use same mapping as demo
+                mapping = ColumnMapping(
+                    posting_date="posting_date",
+                    amount="amount",
+                    account="account",
+                    account_name="account_name",
+                    cost_center="cost_center",
+                    vendor="vendor",
+                    text="text",
+                )
+                trend_df = normalize(raw_trend, mapping, SignMode.AS_IS)
+                st.session_state.trend_periods.append({
+                    "period": trend_period_name,
+                    "df": trend_df,
+                })
+                st.success(f"Zeitraum '{trend_period_name}' hinzugefügt ({len(trend_df):,} Buchungen)")
+                st.rerun()
+
+        # Display current periods
+        if len(st.session_state.trend_periods) >= 2:
+            st.markdown("")
+            st.markdown(f"**{len(st.session_state.trend_periods)} Zeiträume geladen:**")
+            period_names = [p["period"] for p in st.session_state.trend_periods]
+            st.caption(" → ".join(period_names))
+
+            # Calculate trend data
+            trend_data = calculate_trend_data(st.session_state.trend_periods)
+
+            if not trend_data.empty:
+                # Account selector for trend chart
+                trend_accounts = trend_data["account"].tolist()
+                selected_trend_accounts = st.multiselect(
+                    "Konten für Trend-Darstellung",
+                    trend_accounts,
+                    default=trend_accounts[:5] if len(trend_accounts) > 5 else trend_accounts,
+                    key="trend_account_select"
+                )
+
+                if selected_trend_accounts:
+                    # Prepare chart data
+                    chart_data = trend_data[trend_data["account"].isin(selected_trend_accounts)].copy()
+
+                    # Melt for line chart (account x period matrix to long format)
+                    chart_melted = chart_data.melt(
+                        id_vars=["account"],
+                        value_vars=period_names,
+                        var_name="Zeitraum",
+                        value_name="Betrag"
+                    )
+
+                    # Display line chart
+                    st.markdown("**Entwicklung über Zeit**")
+                    st.line_chart(
+                        chart_melted.pivot(index="Zeitraum", columns="account", values="Betrag"),
+                        use_container_width=True,
+                        height=350,
+                    )
+
+                    # Show trend table
+                    st.markdown("**Trend-Tabelle**")
+                    display_trend = chart_data.copy()
+                    for col in period_names:
+                        display_trend[col] = display_trend[col].apply(lambda x: f"{x:,.0f}")
+                    st.dataframe(
+                        display_trend[["account"] + period_names],
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+
+            # Reset trend data button
+            if st.button("Trend-Daten zurücksetzen", key="reset_trend"):
+                st.session_state.trend_periods = []
+                st.rerun()
+        else:
+            st.info("Mindestens 2 Zeiträume erforderlich. Die aktuellen Vorjahr/Aktuell-Daten werden automatisch verwendet.")
 
     # --- Executive Summary Section ---
     st.markdown("---")
@@ -1392,7 +1889,7 @@ if st.session_state.variance_df is not None:
             st.markdown("")
 
             # Download buttons for executive summary
-            col_ex1, col_ex2, col_ex3 = st.columns([1, 1, 2])
+            col_ex1, col_ex2, col_ex3, col_ex4 = st.columns([1, 1, 1, 1])
 
             with col_ex1:
                 # PDF Download
@@ -1419,7 +1916,7 @@ if st.session_state.variance_df is not None:
                     executive_summary=exec_data,
                 )
                 st.download_button(
-                    "Download PDF",
+                    "📄 PDF",
                     exec_pdf,
                     "executive_summary.pdf",
                     "application/pdf",
@@ -1427,6 +1924,28 @@ if st.session_state.variance_df is not None:
                 )
 
             with col_ex2:
+                # Excel Download
+                cc_summary = generate_cost_center_summary(
+                    st.session_state.prior_df,
+                    st.session_state.curr_df,
+                )
+                exec_excel = generate_variance_excel(
+                    variance_df=filtered,
+                    prior_total=st.session_state.prior_df['amount'].sum(),
+                    current_total=st.session_state.curr_df['amount'].sum(),
+                    executive_summary=exec_data,
+                    cost_center_summary=cc_summary,
+                    period_info="Quartalsvergleich YoY",
+                )
+                st.download_button(
+                    "📊 Excel",
+                    exec_excel,
+                    "clarity_report.xlsx",
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="exec_excel",
+                )
+
+            with col_ex3:
                 # Markdown download
                 exec_md = f"# Executive Summary\n\n"
                 exec_md += f"## {exec_data.get('headline', '')}\n\n"
@@ -1436,18 +1955,37 @@ if st.session_state.variance_df is not None:
                 if exec_data.get("top_variances"):
                     exec_md += "### Top Abweichungen\n"
                     for v in exec_data["top_variances"]:
-                        exec_md += f"- **{v.get('name')}**: {v.get('delta', 0):+,.0f} EUR - {v.get('reason', '')}\n"
+                        if isinstance(v, dict):
+                            exec_md += f"- **{v.get('name')}**: {v.get('delta', 0):+,.0f} EUR - {v.get('reason', '')}\n"
                     exec_md += "\n"
                 if exec_data.get("recommendations"):
                     exec_md += "### Empfehlungen\n"
-                    exec_md += "\n".join(f"- {r}" for r in exec_data["recommendations"]) + "\n"
+                    exec_md += "\n".join(f"- {r}" for r in exec_data["recommendations"] if isinstance(r, str)) + "\n"
 
                 st.download_button(
-                    "Download MD",
+                    "📝 Markdown",
                     exec_md,
                     "executive_summary.md",
                     "text/markdown",
                     key="exec_md",
+                )
+
+            with col_ex4:
+                # Email template
+                email_text = generate_email_template(
+                    executive_summary=exec_data,
+                    period_info="Quartalsvergleich YoY",
+                    total_prior=st.session_state.prior_df['amount'].sum(),
+                    total_current=st.session_state.curr_df['amount'].sum(),
+                    total_delta=total_delta,
+                )
+                st.download_button(
+                    "📧 E-Mail",
+                    email_text,
+                    "management_report.txt",
+                    "text/plain",
+                    key="exec_email",
+                    help="E-Mail-Vorlage für Management-Report"
                 )
 
             st.caption(f"Analysiert mit {exec_result.get('backend', '')}")
@@ -1499,7 +2037,7 @@ if st.session_state.variance_df is not None:
 
         st.markdown("")
 
-        tab1, tab2, tab3 = st.tabs(["Treiber", "Buchungen", "Schlagwörter"])
+        tab1, tab2, tab3, tab4 = st.tabs(["Treiber", "Buchungen", "Schlagwörter", "📝 Notizen"])
 
         with tab1:
             st.caption("Welche Kostenstellen oder Lieferanten treiben die Abweichung?")
@@ -1535,6 +2073,51 @@ if st.session_state.variance_df is not None:
                 st.markdown(kw_html, unsafe_allow_html=True)
             else:
                 st.info("Keine Schlagwörter aus Buchungstexten extrahiert")
+
+        with tab4:
+            st.caption("Eigene Notizen zu diesem Konto - werden lokal gespeichert")
+
+            # Get existing note for this account
+            existing_note = st.session_state.account_notes.get(selected, "")
+
+            # Note input
+            new_note = st.text_area(
+                "Notiz",
+                value=existing_note,
+                height=150,
+                placeholder="Hier können Sie Ihre Analyse-Notizen für dieses Konto hinterlegen. Diese werden lokal gespeichert und sind beim nächsten Mal wieder verfügbar.",
+                key=f"note_{selected}",
+                label_visibility="collapsed"
+            )
+
+            col_note1, col_note2, col_note3 = st.columns([1, 1, 2])
+            with col_note1:
+                if st.button("💾 Speichern", key=f"save_note_{selected}"):
+                    st.session_state.account_notes[selected] = new_note
+                    save_notes(st.session_state.account_notes)
+                    st.success("Notiz gespeichert!")
+
+            with col_note2:
+                if existing_note and st.button("🗑️ Löschen", key=f"del_note_{selected}"):
+                    if selected in st.session_state.account_notes:
+                        del st.session_state.account_notes[selected]
+                        save_notes(st.session_state.account_notes)
+                        st.success("Notiz gelöscht!")
+                        st.rerun()
+
+            # Show last modified if note exists
+            if existing_note:
+                st.caption(f"Notiz vorhanden ({len(existing_note)} Zeichen)")
+
+            # Show all accounts with notes
+            accounts_with_notes = [acc for acc in st.session_state.account_notes.keys() if st.session_state.account_notes[acc]]
+            if accounts_with_notes:
+                with st.expander(f"📋 Alle Konten mit Notizen ({len(accounts_with_notes)})"):
+                    for acc in accounts_with_notes:
+                        note_preview = st.session_state.account_notes[acc][:100]
+                        if len(st.session_state.account_notes[acc]) > 100:
+                            note_preview += "..."
+                        st.markdown(f"**{acc}:** {note_preview}")
 
         # --- AI Comment ---
         st.markdown("---")
