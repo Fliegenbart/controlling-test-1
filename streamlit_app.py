@@ -1237,15 +1237,13 @@ def render_executive_summary(data: dict):
                         delta = 0
                 reason = _strip_html(v.get("reason", ""))
                 delta_color = "#34c759" if delta > 0 else "#ff3b30"
-                variances_html += f'''
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f5f5f7; border-radius: 10px; margin: 0.5rem 0;">
-                        <div>
-                            <div style="font-weight: 500;">{name}</div>
-                            <div style="font-size: 0.8125rem; color: #86868b;">{reason}</div>
-                        </div>
-                        <div style="font-weight: 600; color: {delta_color};">{delta:+,.0f}</div>
-                    </div>
-                '''
+                variances_html += (
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;'
+                    f'padding:0.75rem;background:#f5f5f7;border-radius:10px;margin:0.5rem 0;">'
+                    f'<div><div style="font-weight:500;">{name}</div>'
+                    f'<div style="font-size:0.8125rem;color:#86868b;">{reason}</div></div>'
+                    f'<div style="font-weight:600;color:{delta_color};">{delta:+,.0f}</div></div>'
+                )
             variances_html += '</div>'
             st.markdown(variances_html, unsafe_allow_html=True)
 
