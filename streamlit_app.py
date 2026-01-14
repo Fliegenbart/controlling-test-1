@@ -1236,14 +1236,14 @@ def render_executive_summary(data: dict):
                     except (ValueError, TypeError):
                         delta = 0
                 reason = _strip_html(v.get("reason", ""))
-                delta_class = "positive" if delta > 0 else "negative"
+                delta_color = "#34c759" if delta > 0 else "#ff3b30"
                 variances_html += f'''
-                    <div class="variance-highlight">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #f5f5f7; border-radius: 10px; margin: 0.5rem 0;">
                         <div>
-                            <div class="name">{name}</div>
+                            <div style="font-weight: 500;">{name}</div>
                             <div style="font-size: 0.8125rem; color: #86868b;">{reason}</div>
                         </div>
-                        <div class="delta {delta_class}">{delta:+,.0f}</div>
+                        <div style="font-weight: 600; color: {delta_color};">{delta:+,.0f}</div>
                     </div>
                 '''
             variances_html += '</div>'
