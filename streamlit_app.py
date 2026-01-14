@@ -978,7 +978,7 @@ def render_executive_summary(data: dict):
         if data.get("key_findings"):
             findings_html = '<div class="exec-card"><h4>Wichtigste Erkenntnisse</h4>'
             for finding in data["key_findings"]:
-                if finding:
+                if finding and isinstance(finding, str) and "<div" not in finding:
                     findings_html += f'<div class="finding-item">{_strip_html(finding)}</div>'
             findings_html += '</div>'
             st.markdown(findings_html, unsafe_allow_html=True)
@@ -987,7 +987,7 @@ def render_executive_summary(data: dict):
         if data.get("patterns"):
             patterns_html = '<div class="exec-card"><h4>Erkannte Muster</h4>'
             for pattern in data["patterns"]:
-                if pattern:
+                if pattern and isinstance(pattern, str) and "<div" not in pattern:
                     patterns_html += f'<div class="finding-item">{_strip_html(pattern)}</div>'
             patterns_html += '</div>'
             st.markdown(patterns_html, unsafe_allow_html=True)
@@ -997,10 +997,18 @@ def render_executive_summary(data: dict):
         if data.get("top_variances"):
             variances_html = '<div class="exec-card"><h4>Top Abweichungen</h4>'
             for v in data["top_variances"]:
+                # Skip if not a dict (AI sometimes returns HTML strings)
+                if not isinstance(v, dict):
+                    continue
                 name = _strip_html(v.get("name", ""))
-                if not name:
+                if not name or "<" in name:  # Skip if still contains HTML
                     continue
                 delta = v.get("delta", 0)
+                if not isinstance(delta, (int, float)):
+                    try:
+                        delta = float(str(delta).replace(",", "").replace("+", ""))
+                    except (ValueError, TypeError):
+                        delta = 0
                 reason = _strip_html(v.get("reason", ""))
                 delta_class = "positive" if delta > 0 else "negative"
                 variances_html += f'''
@@ -1019,7 +1027,7 @@ def render_executive_summary(data: dict):
         if data.get("recommendations"):
             recs_html = '<div class="exec-card"><h4>Empfehlungen</h4>'
             for rec in data["recommendations"]:
-                if rec:
+                if rec and isinstance(rec, str) and "<div" not in rec:
                     recs_html += f'<div class="finding-item">{_strip_html(rec)}</div>'
             recs_html += '</div>'
             st.markdown(recs_html, unsafe_allow_html=True)
@@ -1028,7 +1036,7 @@ def render_executive_summary(data: dict):
     if data.get("open_items"):
         items_html = '<div class="questions-list"><h4>Klärungsbedarf</h4>'
         for item in data["open_items"]:
-            if item:
+            if item and isinstance(item, str) and "<div" not in item:
                 items_html += f'<div class="question-item">{_strip_html(item)}</div>'
         items_html += '</div>'
         st.markdown(items_html, unsafe_allow_html=True)
