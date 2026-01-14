@@ -1,6 +1,8 @@
-# Variance Copilot
+# Clarity
 
-Lokales Controlling-Tool für Quartals-Abweichungsanalyse (YoY) mit KI-Kommentierung via Ollama.
+Quartalsabweichungen verstehen. In Sekunden statt Stunden.
+
+Lokales Controlling-Tool für Quartals-Abweichungsanalyse (YoY) mit KI-Kommentierung - 100% lokal, ohne Cloud.
 
 ## Setup
 

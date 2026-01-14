@@ -10,6 +10,7 @@ build/
 venv/
 ENV/
 .env
+.streamlit/secrets.toml
 .pytest_cache/
 .ruff_cache/
 *.log

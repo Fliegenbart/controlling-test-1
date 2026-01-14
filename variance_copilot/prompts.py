@@ -200,3 +200,132 @@ KEYWORDS: {kw_text}
 
 Analysiere diese Varianz. Antworte NUR mit JSON.
 """
+
+
+# --- EXECUTIVE SUMMARY Prompt ---
+SYSTEM_PROMPT_EXECUTIVE = """Du bist ein Senior Controller, der einen Executive Summary für die Geschäftsführung erstellt.
+
+STRIKTE REGELN:
+1. Verwende NUR die gegebenen Zahlen - erfinde nichts.
+2. Fokussiere auf die TOP 5-7 wichtigsten Abweichungen.
+3. Erkläre Muster und Zusammenhänge zwischen Konten.
+4. Unterscheide zwischen Fakten, Indizien und offenen Punkten.
+5. Formuliere konkrete Empfehlungen und nächste Schritte.
+
+OUTPUT: NUR GÜLTIGES JSON (kein Markdown, kein Text davor/danach):
+{
+  "headline": "Executive Summary in einem Satz (max 15 Worte)",
+  "key_findings": [
+    "Wichtigste Erkenntnis 1 (mit Zahlen belegt)",
+    "Wichtigste Erkenntnis 2",
+    "Wichtigste Erkenntnis 3"
+  ],
+  "top_variances": [
+    {"name": "Kontoname", "delta": 12345, "reason": "Kurze Erklärung"},
+    {"name": "Kontoname 2", "delta": -5000, "reason": "Kurze Erklärung"}
+  ],
+  "patterns": [
+    "Erkanntes Muster 1 (z.B. 'Mehrere Konten zeigen Kostensteigerungen bei Lieferant X')",
+    "Erkanntes Muster 2"
+  ],
+  "recommendations": [
+    "Konkrete Handlungsempfehlung 1",
+    "Konkrete Handlungsempfehlung 2"
+  ],
+  "open_items": [
+    "Offener Punkt der geklärt werden muss 1",
+    "Offener Punkt 2"
+  ]
+}
+"""
+
+
+def format_executive_context(
+    period_info: str,
+    total_prior: float,
+    total_current: float,
+    total_delta: float,
+    variance_summary: List[Dict[str, Any]],
+    account_details: Optional[List[Dict[str, Any]]] = None,
+) -> str:
+    """Format context for executive summary generation.
+
+    Args:
+        period_info: Period description (e.g., "Q2 2024 vs Q2 2025")
+        total_prior: Total prior period value
+        total_current: Total current period value
+        total_delta: Total variance
+        variance_summary: List of material variances with account info
+        account_details: Optional additional details per account
+
+    Returns:
+        Formatted prompt string
+    """
+    delta_pct = (total_delta / total_prior * 100) if total_prior != 0 else 0
+
+    # Format variance table
+    variance_lines = []
+    for v in variance_summary[:15]:  # Top 15 accounts
+        acc = v.get("account", "")
+        name = v.get("account_name", "")[:30]
+        prior = v.get("prior", 0)
+        current = v.get("current", 0)
+        delta = v.get("delta", 0)
+        pct = v.get("delta_pct")
+        pct_str = f"{pct:+.1%}" if pct is not None else "-"
+        share = v.get("share_of_total_abs_delta", 0)
+
+        variance_lines.append(
+            f"  {acc} {name}: VJ {prior:,.0f} → AQ {current:,.0f} | "
+            f"Δ {delta:+,.0f} ({pct_str}) | Anteil: {share:.1%}"
+        )
+
+    variance_table = "\n".join(variance_lines)
+
+    # Format account details if provided
+    details_text = ""
+    if account_details:
+        details_lines = []
+        for detail in account_details[:10]:
+            acc = detail.get("account", "")
+            name = detail.get("account_name", "")
+            drivers = detail.get("top_drivers", [])
+            keywords = detail.get("keywords", [])
+
+            driver_str = ", ".join(
+                f"{d.get('name', '')}: {d.get('delta', 0):+,.0f}"
+                for d in drivers[:3]
+            ) if drivers else "keine"
+
+            kw_str = ", ".join(keywords[:5]) if keywords else "keine"
+
+            details_lines.append(
+                f"  {acc} {name}:\n"
+                f"    Treiber: {driver_str}\n"
+                f"    Keywords: {kw_str}"
+            )
+
+        details_text = "\n\nDETAILS PRO KONTO:\n" + "\n".join(details_lines)
+
+    return f"""EXECUTIVE SUMMARY ANFRAGE
+
+BERICHTSZEITRAUM: {period_info}
+
+GESAMTÜBERSICHT:
+- Vorjahr Gesamt: {total_prior:,.0f} EUR
+- Aktuell Gesamt: {total_current:,.0f} EUR
+- Gesamtvarianz: {total_delta:+,.0f} EUR ({delta_pct:+.1f}%)
+- Anzahl materieller Abweichungen: {len(variance_summary)}
+
+MATERIELLE ABWEICHUNGEN (sortiert nach Betrag):
+{variance_table}
+{details_text}
+
+Erstelle einen Executive Summary. Fokussiere auf:
+1. Die wichtigsten Abweichungen und deren Ursachen
+2. Erkannte Muster über mehrere Konten
+3. Konkrete Handlungsempfehlungen
+4. Offene Punkte die geklärt werden müssen
+
+Antworte NUR mit JSON.
+"""

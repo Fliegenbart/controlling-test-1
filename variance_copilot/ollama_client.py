@@ -10,7 +10,7 @@ from typing import Any, Dict, Optional
 import requests
 
 DEFAULT_BASE_URL = "http://localhost:11434"
-DEFAULT_MODEL = "llama3.2"
+DEFAULT_MODEL = "llama3.1:8b"
 DEFAULT_TIMEOUT = 120
 
 
@@ -111,6 +111,46 @@ def ollama_generate(
         raise RuntimeError(f"Ollama API Fehler: {e}")
 
 
+def _fix_json_issues(text: str) -> str:
+    """Fix common JSON issues from LLMs.
+
+    LLMs sometimes output invalid JSON like:
+    - "delta": +380376  (leading + is invalid)
+    - "delta": -115,209  (German thousand separator - invalid in JSON)
+    - trailing commas in arrays/objects
+    - single quotes instead of double quotes (careful with this)
+
+    Args:
+        text: JSON string with potential issues
+
+    Returns:
+        Fixed JSON string
+    """
+    # Fix German/US thousand separators in numbers (e.g., -115,209 -> -115209)
+    # Pattern: numbers with comma followed by exactly 3 digits (thousand separator pattern)
+    # We need to be careful not to break JSON structure
+    # Match pattern: digit(s),3digits - this is a thousand separator
+    # Apply multiple times to handle numbers like 1,234,567
+    prev_text = None
+    while prev_text != text:
+        prev_text = text
+        # Match: optional sign, 1-3 digits, comma, exactly 3 digits
+        # The comma must be followed by exactly 3 digits (then non-digit or end)
+        text = re.sub(r'([+-]?\d{1,3}),(\d{3})(?!\d)', r'\1\2', text)
+
+    # Fix leading + on numbers (e.g., ": +123" -> ": 123")
+    text = re.sub(r':\s*\+(\d)', r': \1', text)
+
+    # Fix trailing commas before ] or }
+    text = re.sub(r',\s*([}\]])', r'\1', text)
+
+    # Fix missing commas between array elements (common LLM mistake)
+    # e.g., "item1" "item2" -> "item1", "item2"
+    text = re.sub(r'"\s+(?=")', '", ', text)
+
+    return text
+
+
 def extract_json(text: str) -> Optional[Dict[str, Any]]:
     """Extract JSON from LLM response.
 
@@ -119,6 +159,7 @@ def extract_json(text: str) -> Optional[Dict[str, Any]]:
     - JSON embedded in text ("bla bla {...} bla")
     - Multiple JSON objects (returns first valid one)
     - Nested braces
+    - Invalid JSON like +numbers (fixed automatically)
 
     Args:
         text: Raw response text
@@ -128,6 +169,9 @@ def extract_json(text: str) -> Optional[Dict[str, Any]]:
     """
     if not text or not text.strip():
         return None
+
+    # Fix common LLM JSON issues
+    text = _fix_json_issues(text)
 
     # Strategy 1: Try markdown code block first
     code_block = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
