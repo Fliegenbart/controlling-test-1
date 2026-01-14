@@ -15,3 +15,7 @@ ENV/
 .ruff_cache/
 *.log
 .DS_Store
+
+# Clarity local files
+.clarity_notes.json
+Clarity_Starten.command
